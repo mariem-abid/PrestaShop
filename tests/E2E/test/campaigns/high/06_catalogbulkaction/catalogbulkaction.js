@@ -56,25 +56,16 @@ scenario('Catalog bulk action', () => {
     }, 'product/check_product');
 
     scenario('delete  the  duplicate products', client => {
-
         test('should click on "Select all" radio', () => client.selectAllProducts(CatalogPage.select_all_product_button));
         test('should choose the "Bulk action" button', () => client.waitForExistAndClick(CatalogPage.action_group_button));
-
-
         test('should choose the "Delete selection" action', () => client.waitForExistAndClick(CatalogPage.delete_selection_button));
         test('should click on "delete" button', () => client.waitForVisibleAndClick(CatalogPage.delete_now_button));
         test('should verify the appearance of the green validation', () => {
             return promise
                 .then(() => client.pause(80000))
-
                 .then(() => client.checkTextValue(CatalogPage.green_validation, 'close\nProduct(s) successfully deleted.'));
-
-
         });
         test('should click on "reset" button', () => client.waitForExistAndClick(AddProductPage.catalog_reset_filter));
-
-
     }, 'catalogbulkaction');
-
-
+    
 }, 'catalogbulkaction', true);
