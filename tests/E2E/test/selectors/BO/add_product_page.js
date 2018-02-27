@@ -177,6 +177,7 @@ module.exports = {
     status_select: '//*[@id="product_filter_column_active"]//select[@name="filter_column_active"]',
     first_product_status: '//*[@id="product_catalog_list"]//tr/td[8]/a/i[contains(@class, "action-%ACTION")]',
     edit_button: '//*[@id="product_catalog_list"]//i[text()="mode_edit"]',
-    pagination_products: '//*[@id="product_catalog_list"]//div[contains(@class, "justify-content-center")]/div[1]'
+    pagination_products: '//*[@id="product_catalog_list"]//div[contains(@class, "justify-content-center")]/div[1]',
+    pagination_select:'//*[@id="paginator_select_page_limit"]',
   }
 };

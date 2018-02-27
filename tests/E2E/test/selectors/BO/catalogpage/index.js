@@ -8,6 +8,11 @@ module.exports = Object.assign(
       action_button: '(//*[@id="main-div"]//div[contains(@class, "bulk-catalog")]//a)[%ID]',
       green_validation: '//*[@id="main-div"]//div[contains(@class, "alert-success") and not(@style)]',
       product_status_icon: '(//*[@id="product_catalog_list"]//tbody/tr[%S]//i[contains(@class, "material-icons")])[1]',
+
+       
+        apply_button:'[name="products_filter_submit"]',
+        delete_now_button:'//*[@id="catalog_deletion_modal"]//div[@class="modal-content"]/div[@class="modal-footer"]/button[@class="btn btn-primary btn-lg"]',
+        delete_selection_button:'//*[@id="catalog-actions"]/div[@class="col-md-2"]//a[4]',
     }
   },
   require('./feature_submenu'),
