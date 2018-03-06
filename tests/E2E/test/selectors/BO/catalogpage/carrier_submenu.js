@@ -1,18 +1,29 @@
 module.exports = {
-    CarrierSubMenu: {
-
-        submenu: '//*[@id="subtab-AdminCarriers"]/a',
-        new_carrier_button: '//*[@id="page-header-desc-carrier-new_carrier"]/i',
-        name_input: '//*[@id="name"]',
-        transit_time: '//*[@id="delay_1"]',
-        speed_grade: '//*[@id="grade"]',
-        logo: '//*[@id="carrier_logo_input"]',
-        tracking_url: '//*[@id="url"]',
-        
-
-
-    }
-
-
+  CarrierSubMenu: {
+    submenu: '//*[@id="subtab-AdminCarriers"]/a',
+    new_carrier_button: '//*[@id="page-header-desc-carrier-new_carrier"]/i',
+    name_input: '//*[@id="name"]',
+    transit_time: '//*[@id="delay_1"]',
+    speed_grade: '//*[@id="grade"]',
+    logo: '//*[@id="carrier_logo_input"]',
+    tracking_url: '//*[@id="url"]',
+    next_button: '//*[@id="carrier_wizard"]/div[2]/a[2]',
+    shipping_handling: '//*[@id="fieldset_form_1_1"]/div/div[1]/div/span/label[%id]',
+    billing_price: '//*[@id="billing_price"]',
+    billing_weight: '//*[@id="billing_weight"]',
+    range: '//*[@id="zones_table"]/tbody/tr[%id]/td[3]/div/input',
+    all_zone: '//*[@id="zones_table"]/tbody/tr[3]/td[2]/input',
+    max_width: '//*[@id="max_width"]',
+    max_hieght: '//*[@id="max_height"]',
+    max_depth: '//*[@id="max_depth"]',
+    max_weight: '//*[@id="max_weight"]',
+    finish_button: '//*[@id="carrier_wizard"]/div[2]/a[1]',
+    steps: '//*[@id="carrier_wizard"]/ul/li[%id]/a',
+    search_input: '//*[@id="table-carrier"]//input[@name="carrierFilter_name"]',
+    search_button: '//*[@id="submitFilterButtoncarrier"]',
+    update_button: '//*[@id="table-carrier"]//a[@class="edit btn btn-default"]',
+    green_validation: '//*[@id="content"]/div[@class="bootstrap"]/div[@class="alert alert-success"]',
+    icon: '//*[@id="table-carrier"]/tbody//i[@class="icon-caret-down"]',
+    delete_button: '//*[@id="table-carrier"]//a[@class="delete"]',
+  }
 };
-
