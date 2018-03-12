@@ -21,8 +21,7 @@ module.exports = {
     quick_view_add_to_cart: '//*[@id="add-to-cart-or-refresh"]//button[contains(@data-button-action, "add-to-cart")]',
     //Get the number of products in front office after clicking on "SEE ALL PRODUCTS" link
     products_number: '//*[@id="js-product-list-top"]//p',
-    new_product_page: '//*[@id="link-product-page-new-products-1"]',
-    first_new_product: '//*[@id="js-product-list"]//article[1]',
-    new_label: '//*[@id="content"]/ul/li[@class="product-flag new"]',
+    new_product_page: '//*[@id="link-product-page-new-products-1"]', 
+    new_label: '//*[@id="js-product-list"]/div[@class="products row"]/article[1]//li[@class="product-flag new"]',
   }
 };

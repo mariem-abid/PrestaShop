@@ -11,11 +11,10 @@ scenario('New product', () => {
 
   scenario('Display the new products page', client => {
     test('should click on "New products"', () => client.scrollWaitForExistAndClick(productPage.new_product_page, 60));
-    test('should display a product', () => client.waitForExistAndClick(productPage.first_new_product));
-    test('should check if the product contains the "New" label', () => client.checkTextValue(productPage.new_label, 'NEW'));
+    test('should check if the product contains the "New" label', () => client.checkTextValue(productPage.new_label,'NEW'));
   }, 'product/product');
   
-  scenario('Logout from the Front Office', client => {
+   scenario('Logout from the Front Office', client => {
     test('should logout successfully from Front Office', () => client.signOutFO(AccessPageFO));
   }, 'product/product');
 
