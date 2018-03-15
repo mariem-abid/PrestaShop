@@ -1,0 +1,36 @@
+module.exports = {
+  Location: {
+    green_validation_notice: '//*[@id="content"]//div[@class="alert alert-success"]',
+    Zone: {
+      new_zone_button: '//*[@id="page-header-desc-zone-new_zone"]/i',
+      name_input: '#name',
+      zone_active: '//*[@id="fieldset_0"]//span/label[%id]',
+      save_button: '//*[@id="zone_form_submit_btn"]/i',
+      search_button: '//*[@id="submitFilterButtonzone"]',
+      searchZoneByName: '//*[@id="table-zone"]/thead//input[@name="zoneFilter_name"]',
+      update_button: '//*[@id="table-zone"]/tbody//td[@class="text-right"]//a[@class="edit btn btn-default"]',
+      reset_button: '//*[@id="table-zone"]//button[@class="btn btn-warning"]',
+      icon: '//*[@id="table-zone"]/tbody//button',
+      delete_button: '//*[@id="table-zone"]/tbody//ul/li/a',
+      bulk_action: '#bulk_action_menu_zone',
+      bulk_action_menu: '//*[@id="form-zone"]//div[@class="btn-group bulk-actions dropup open"]//li[%id]/a',
+    },
+    Country: {
+      country_restrictions: '//*[@id="conf_id_PS_RESTRICT_DELIVERED_COUNTRIES"]//label[%id]',
+      new_country_button: '//*[@id="page-header-desc-country-new_country"]/i',
+      name_input: '#name_1',
+      iso_code: '//*[@id="iso_code"]',
+      call_prefix: '#call_prefix',
+      zone: '#id_zone',
+      zip_code_on: '//*[@id="fieldset_0"]//span/label[@for="need_zip_code_on"]',
+      code_format: '#zip_code_format',
+      contains_states_on: '//*[@id="fieldset_0"]//span/label[@for="contains_states_on"]',
+      save_button: '#country_form_submit_btn',
+      searchCountryByName: '//*[@id="table-country"]/thead//input[@name="countryFilter_b!name"]',
+      update_button: '//*[@id="table-country"]//td[@class="text-right"]//a[@class="edit btn btn-default"]',
+      reset_button: '//*[@id="table-country"]//button[@class="btn btn-warning"]',
+      search_button: '//*[@id="submitFilterButtoncountry"]',
+      restrict_country_on: '//*[@id="conf_id_PS_RESTRICT_DELIVERED_COUNTRIES"]//label[@for="PS_RESTRICT_DELIVERED_COUNTRIES_on"]',
+    },
+  }
+}
