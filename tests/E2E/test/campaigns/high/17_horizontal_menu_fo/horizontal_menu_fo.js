@@ -1,6 +1,5 @@
 const {AccessPageFO} = require('../../../selectors/FO/access_page');
 const common_scenarios = require('../../common_scenarios/horizontal_menu');
-//const {HorizontalMenu}=require('../../../selectors/FO/horizontal_menu');
 
 scenario('Click on a link on the horizontal menu', () => {
   scenario('Open the browser and connect to the Front Office', client => {
