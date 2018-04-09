@@ -5,14 +5,41 @@ const {Brands} = require('../../selectors/BO/catalogpage/Manufacturers/brands');
 const {BrandAddress} = require('../../selectors/BO/catalogpage/Manufacturers/brands_address');
 const {BrandsFO} = require('../../selectors/FO/brands_FO');
 let promise = Promise.resolve();
+/**** Example of brand data ****
+ * var brandData={
+ * name: 'Brand',
+ * short_desc: 'Short description',
+ * description: 'Description',
+ * image: 'prestashop.png',
+ * meta_title: 'meta title',
+ * meta_description: 'meta description',
+ * short_desc_updated: 'Short description updated',
+ * description_updated: 'Description updated',
+};
+ */
+/**** Example of address data ****
+ * var addressData={
+ * last_name: 'PrestaShop',
+ * first_name: 'PrestaShop',
+ * address: '12 rue d\'amesterdam',
+ * address_updated: '1250 rue d\'amesterdam',
+ * second_address: 'RDC',
+ * postal_code: '75009',
+ * city: 'Paris',
+ * city_updated: 'Parissss',
+ * home_phone: '0123456789',
+ * mobile_phone: '9876543210',
+ * other: 'Azerty',
+};
+ */
 module.exports = {
   createManufacturer(name, short_desc, description, image, meta_title, meta_description) {
-    scenario('Create a new "Manufacturer"',client => {
+    scenario('Create a new "Manufacturer"', client => {
       test('should go to "Brands & Suppliers" page', () => client.goToSubtabMenuPage(Menu.Sell.Catalog.catalog_menu, Menu.Sell.Catalog.manufacturers_submenu));
       test('should click on "Add new brand" button', () => client.waitForExistAndClick(Brands.new_brand_button));
-      test('should set the "Name" input',() => client.waitAndSetValue(Brands.name_input, name + date_time));
-      test('should set the "short description" input',() => client.setTextToEditor(Brands.short_desc_textarea, short_desc));
-      test('should set the "description" input',() => client.setTextToEditor(Brands.desc_textarea, description));
+      test('should set the "Name" input', () => client.waitAndSetValue(Brands.name_input, name + date_time));
+      test('should set the "short description" input', () => client.setTextToEditor(Brands.short_desc_textarea, short_desc));
+      test('should set the "description" input', () => client.setTextToEditor(Brands.desc_textarea, description));
       test('should upload "Picture" to the brand', () => client.uploadPicture(image, Brands.image_input, "logo"));
       test('should set the "Meta title" input', () => client.waitAndSetValue(Brands.meta_title_input, meta_title));
       test('should set the "Meta description" input', () => client.waitAndSetValue(Brands.meta_description_input, meta_description));
@@ -68,9 +95,9 @@ module.exports = {
   },
   checkProductWithManufacturerInFO(name) {
     scenario('Check that the manufacturer has a product', client => {
-      test('should click on the "Sitemap"',() => client.waitForExistAndClick(BrandsFO.site_map));
-      test('should go to the "Brands" page',() => client.waitForExistAndClick(BrandsFO.brands_page));
-      test('should verify that the manufacturer has product',() => client.scrollWaitForExistAndClick(BrandsFO.brands_info.replace('%s', name.toLowerCase() + date_time)));
+      test('should click on the "Sitemap"', () => client.waitForExistAndClick(BrandsFO.site_map));
+      test('should go to the "Brands" page', () => client.waitForExistAndClick(BrandsFO.brands_page));
+      test('should verify that the manufacturer has product', () => client.scrollWaitForExistAndClick(BrandsFO.brands_info.replace('%s', name.toLowerCase() + date_time)));
     }, 'manufacturers');
   },
   deleteManufacturer(name, first_name) {
@@ -85,9 +112,9 @@ module.exports = {
       });
       test('should verify the appearance of the green validation', () => client.checkTextValue(CatalogPage.success_panel, '×\nSuccessful deletion.'));
       test('should click on "Reset" button', () => client.waitForExistAndClick(Brands.reset_button));
-     test('should search for brand addresse', () => client.searchByValue(BrandAddress.search_input_brand, BrandAddress.search_button, first_name));
-    test('should check that the manufacturer is deleted', () => client.checkTextValue(BrandAddress.brand, '--'));
-     test('should click on "Reset" button', () => client.waitForExistAndClick(BrandAddress.reset_button));
+      test('should search for brand addresse', () => client.searchByValue(BrandAddress.search_input_brand, BrandAddress.search_button, first_name));
+      test('should check that the manufacturer is deleted', () => client.checkTextValue(BrandAddress.brand, '--'));
+      test('should click on "Reset" button', () => client.waitForExistAndClick(BrandAddress.reset_button));
     }, 'manufacturers');
   },
   createManufactureAddress(name, last_name, first_name, address, second_address, postal_code, city, home_phone, mobile_phone, other) {
@@ -106,7 +133,7 @@ module.exports = {
       test('should set the "Other information" input', () => client.waitAndSetValue(BrandAddress.other_input, other));
       test('should click on "Save" button', () => client.waitForExistAndClick(BrandAddress.save_button));
       test('should verify the appearance of the green validation', () => client.checkTextValue(CatalogPage.success_panel, '×\nSuccessful creation.'));
-      test('should search for a brand', () => client.searchByValue(Brands.search_input_brand, Brands.search_button,name + date_time));
+      test('should search for a brand', () => client.searchByValue(Brands.search_input_brand, Brands.search_button, name + date_time));
       test('should check the address number of a brand', () => client.checkTextValue(Brands.number_addresses, '1'));
 
     }, 'manufacturers');

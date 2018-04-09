@@ -1,5 +1,5 @@
 module.exports = {
-  Brands: {
+  Brands:{
     new_brand_button: '//*[@id="page-header-desc-address-new_manufacturer"]',
     name_input: '//*[@id="name"]',
     short_desc_textarea: '//*[@id="manufacturer_form"]/div/div[2]/div[2]/div/div/div/div[1]/div/div/div/div/div/div[1]/button',

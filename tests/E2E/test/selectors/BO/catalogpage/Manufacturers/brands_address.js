@@ -1,5 +1,5 @@
 module.exports = {
-  BrandAddress: {
+  BrandAddress:{
     new_brand_address_button: '//*[@id="page-header-desc-address-new_manufacturer_address"]',
     branch_select: '//*[@id="id_manufacturer"]',
     last_name_input: '//*[@id="lastname"]',

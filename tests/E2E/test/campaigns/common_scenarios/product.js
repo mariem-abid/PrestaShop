@@ -44,6 +44,7 @@ module.exports = {
           test('should add products to the pack', () => client.addPackProduct(productData['product']['name'] + date_time, productData['product']['quantity']));
         }, 'product/product');
       }
+
       if (productData.hasOwnProperty('attribute')) {
         scenario('Add Attribute', client => {
           test('should select the "Product with combination" radio button', () => client.scrollWaitForExistAndClick(AddProductPage.variations_type_button));
@@ -68,6 +69,7 @@ module.exports = {
           test('should set the "Variations quantity" input', () => client.setVariationsQuantity(AddProductPage, productData['attribute']['variation_quantity']));
         }, 'product/create_combinations');
       }
+
       if (productData.hasOwnProperty('feature')) {
         scenario('Add Feature', client => {
           test('should click on "Add feature" button', () => {
@@ -89,6 +91,7 @@ module.exports = {
           test('should select the brand', () => client.waitForVisibleAndClick('/html/body/span[4]/span/span[2]/ul/li'));
         }, 'product/product');
       }
+
       if (productData.hasOwnProperty('pricing')) {
         scenario('Edit product pricing', client => {
           test('should click on "Pricing"', () => client.scrollWaitForExistAndClick(AddProductPage.product_pricing_tab, 50));
@@ -101,6 +104,7 @@ module.exports = {
           test('should click on "Apply" button', () => client.waitForExistAndClick(AddProductPage.specific_price_save_button));
         }, 'product/product');
       }
+
       scenario('Save the created product', client => {
         test('should switch the product online', () => {
           return promise
@@ -115,8 +119,11 @@ module.exports = {
         test('should click on "Save" button', () => client.waitForExistAndClick(AddProductPage.save_product_button, 2000));
         test('should verify the appearance of the green validation', () => client.checkTextValue(AddProductPage.validation_msg, 'Settings updated.'));
       }, 'product/product');
+
     }, 'product/product');
+
   },
+
   checkProductBO(AddProductPage, productData) {
     scenario('Check the product creation in the Back Office', client => {
       test('should go to "Catalog" page', () => client.goToSubtabMenuPage(Menu.Sell.Catalog.catalog_menu, Menu.Sell.Catalog.products_submenu));
@@ -130,6 +137,7 @@ module.exports = {
       test('should reset filter', () => client.waitForExistAndClick(AddProductPage.catalog_reset_filter));
     }, 'product/check_product');
   },
+
   sortProduct: function (selector, sortBy) {
     scenario('Check the sort of products by "' + sortBy.toUpperCase() + '"', client => {
       test('should click on "Sort by ASC" icon', () => {
@@ -139,6 +147,7 @@ module.exports = {
         return promise
           .then(() => client.waitForExistAndClick(ProductList.sort_by_icon.replace("%B", sortBy).replace("%W", "asc")));
       });
+
       test('should check that the products is well sorted by ASC', () => {
         for (let j = 0; j < global.productsPageNumber; j++) {
           promise = client.getProductsInformation(selector, j, true);
@@ -147,7 +156,9 @@ module.exports = {
           .then(() => client.sortTable("ASC", sortBy))
           .then(() => client.checkSortProduct());
       });
+
       test('should click on "Sort by DESC" icon', () => client.waitForExistAndClick(ProductList.sort_by_icon.replace("%B", sortBy).replace("%W", "desc")));
+
       test('should check that the products is well sorted by DESC', () => {
         for (let j = 0; j < global.productsPageNumber; j++) {
           promise = client.getProductsInformation(selector, j, true);
