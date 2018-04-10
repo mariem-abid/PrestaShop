@@ -417,7 +417,7 @@ class CommonClient {
    * This function checks the search result
    * @param selector editor body selector
    * @param content
-   * @returns {*}
+   * @returns {*}(
    */
   setEditorText(selector, content) {
     return this.client

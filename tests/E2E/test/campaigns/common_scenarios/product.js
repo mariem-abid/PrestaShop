@@ -82,13 +82,10 @@ module.exports = {
       }
       if (productData.hasOwnProperty('brand')) {
         scenario('Add brand', client => {
-          test('should click on "Add brand" button', () => {
-            return promise
-              .then(() => client.scrollWaitForExistAndClick('//*[@id="add_brand_button"]'))
-          });
-          test('should select the created brand', () => client.waitForVisibleAndClick('//*[@id="manufacturer-content"]/div/div[1]/fieldset/span/span[1]/span'));
-          test('should search for the created brand', () => client.waitAndSetValue('/html/body/span[4]/span/span[1]/input', productData.brand + date_time), 1000);
-          test('should select the brand', () => client.waitForVisibleAndClick('/html/body/span[4]/span/span[2]/ul/li'));
+          test('should click on "Add brand" button', () => client.scrollWaitForExistAndClick(AddProductPage.add_brand_button));
+          test('should select the created brand', () => client.waitForVisibleAndClick(AddProductPage.brand_select));
+          test('should search for the created brand', () => client.waitAndSetValue(AddProductPage.search_brand, productData.brand + date_time), 1000);
+          test('should select the brand', () => client.waitForVisibleAndClick(AddProductPage.brand_click));
         }, 'product/product');
       }
 

@@ -175,13 +175,17 @@ module.exports = {
     duplicate_button: '//*[@aria-labelledby="dropdownMenu"]//a[contains(@class, "duplicate")]',
     success_panel: '//div[contains(@class, "alert-success")]//p',
     delete_button: '//*[@id="product_form_delete_btn"]',
-    delete_confirmation_button: '//*[@id="confirmation_modal"]//button[contains(text(), "Yes")]',
     symfony_toolbar: '//*[contains (@id, "sfToolbarMainContent")]/a',
     summary_tinymce_buttons: '//*[@id="description_short"]//div[contains(@class, "mce-toolbar-grp")]',
     combination_first_table: '//*[@id="accordion_combinations"]',
     combination_second_table: '//*[@id="accordion_combinations"]//tr[2]',
     home_delete_button: '//*[@id="ps_categoryTags"]/span[1]/a',
     created_category: '//*[@id="ps_categoryTags"]/span[2]/span'
+    delete_confirmation_button: '//*[@id="confirmation_modal"]//button[contains(text(), "Yes")]',
+    add_brand_button:'//*[@id="add_brand_button"]',
+    brand_select:'//*[@id="manufacturer-content"]/div/div[1]/fieldset/span/span[1]/span',
+    search_brand:'/html/body/span[4]/span/span[1]/input',
+    brand_click:'/html/body/span[4]/span/span[2]/ul/li'
   },
 
   ProductList: {

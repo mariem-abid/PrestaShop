@@ -1,5 +1,5 @@
 module.exports = {
-  BrandsFO:{
+  BrandsFO: {
     site_map: '//*[@id="link-static-page-sitemap-2"]',
     brands_page: '//*[@id="manufacturer-page"]',
     brands_info: '//*[@id="main"]//ul/li[@class="brand"]//div[@class="brand-infos"]//a[contains(@href,"%s")]',
