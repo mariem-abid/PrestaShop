@@ -85,3 +85,4 @@ scenario('Create a new manufacturer in the Back Office', () => {
     test('should click on "Reset" button', () => client.waitForExistAndClick(Brands.reset_button));
   }, 'manufacturers');
 }, 'manufacturers', true);
+

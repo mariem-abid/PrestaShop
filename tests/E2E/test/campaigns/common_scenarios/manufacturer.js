@@ -47,8 +47,8 @@ module.exports = {
   updateManufacturer(manufacturerInformation) {
     scenario('Update the created "Manufacturer"', client => {
       test('should go to "Brands & Suppliers" page', () => client.goToSubtabMenuPage(Menu.Sell.Catalog.catalog_menu, Menu.Sell.Catalog.manufacturers_submenu));
-      test('should search for brand', () => client.searchByValue(Brands.search_input, Brands.search_button, manufacturerInformation.name + date_time));
-      test('should click on "the icon"', () => client.waitForExistAndClick(Brands.icon));
+      test('should search for brand', () => client.searchByValue(Brands.search_input_brand, Brands.search_button, manufacturerInformation.name + date_time));
+      test('should click on "the dropdown" button', () => client.waitForExistAndClick(Brands.icon));
       test('should click on "Edit" action', () => {
         return promise
           .then(() => client.waitForExistAndClick(Brands.update_button))
@@ -82,6 +82,7 @@ module.exports = {
     scenario('Check that the manufacturer is well deleted in the Front Office', client => {
       test('should click on the "Sitemap"', () => client.scrollWaitForExistAndClick(BrandsFO.site_map, 3000));
       test('should go to the "Brands" page', () => client.waitForExistAndClick(BrandsFO.brands_page));
+      test('should verify that the manufacturer is not exist', () => client.isNotExisting(BrandsFO.brands_info.replace('%s', manufacturerInformation.name.toLowerCase() + date_time)));
     }, 'manufacturers');
   },
   checkProductWithManufacturerInFO(manufacturerInformation) {
@@ -94,10 +95,10 @@ module.exports = {
   deleteManufacturer(manufacturerInformation, manufacturerAddress) {
     scenario('Delete the created "Manufacturer"', client => {
       test('should go to "Brands & Suppliers" page', () => client.goToSubtabMenuPage(Menu.Sell.Catalog.catalog_menu, Menu.Sell.Catalog.manufacturers_submenu));
-      test('should search for brand', () => client.searchByValue(Brands.search_input, Brands.search_button, manufacturerInformation.name + date_time));
-      test('should click on "the icon"', () => client.waitForExistAndClick(Brands.icon));
+      test('should search for brand', () => client.searchByValue(Brands.search_input_brand, Brands.search_button, manufacturerInformation.name + date_time));
+      test('should click on "the dropdown" button', () => client.waitForExistAndClick(Brands.icon));
       test('should click on "Delete" action', () => client.waitForExistAndClick(Brands.delete_button));
-      test('should accept the alert', () => client.alertAccept());
+      test('should accept the confirmation alert', () => client.alertAccept());
       test('should verify the appearance of the green validation', () => client.checkTextValue(CatalogPage.success_panel, '×\nSuccessful deletion.'));
       test('should click on "Reset" button', () => client.waitForExistAndClick(Brands.reset_button));
       test('should search for brand address', () => client.searchByValue(BrandAddress.search_input_brand, BrandAddress.search_button, manufacturerAddress.first_name));
@@ -147,10 +148,10 @@ module.exports = {
       test('should search for brand address ', () => client.searchByValue(BrandAddress.search_input_brand, BrandAddress.search_button, manufacturerInformation.name + date_time));
       test('should click on "the icon"', () => client.waitForExistAndClick(BrandAddress.icon));
       test('should click on "Delete" action', () => client.waitForExistAndClick(BrandAddress.delete_button));
-      test('should accept the alert', () => client.alertAccept());
+      test('should accept the confirmation alert', () => client.alertAccept());
       test('should verify the appearance of the green validation', () => client.checkTextValue(CatalogPage.success_panel, '×\nSuccessful deletion.'));
       test('should click on "Reset" button', () => client.waitForExistAndClick(BrandAddress.reset_button));
-      test('should search for brand', () => client.searchByValue(Brands.search_input, Brands.search_button, manufacturerInformation.name + date_time));
+      test('should search for brand', () => client.searchByValue(Brands.search_input_brand, Brands.search_button, manufacturerInformation.name + date_time));
       test('should check that the manufacturer is deleted', () => client.checkTextValue(Brands.number_addresses, '--'));
       test('should click on "Reset" button', () => client.waitForExistAndClick(Brands.reset_button));
     }, 'manufacturers');
