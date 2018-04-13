@@ -167,7 +167,8 @@ module.exports = {
     duplicate_button: '//*[@aria-labelledby="dropdownMenu"]//a[contains(@class, "duplicate")]',
     success_panel: '//div[contains(@class, "alert-success")]//p',
     delete_button: '//*[@id="product_form_delete_btn"]',
-    delete_confirmation_button: '//*[@id="confirmation_modal"]//button[contains(text(), "Yes")]'
+    delete_confirmation_button: '//*[@id="confirmation_modal"]//button[contains(text(), "Yes")]',
+    select_supplier: '(//label[contains(text(), "%s")])[%id]'
   },
 
   ProductList: {

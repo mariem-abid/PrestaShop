@@ -282,6 +282,13 @@ class CommonClient {
       .then((isExisting) => expect(isExisting).to.be.true)
   }
 
+  isNotExisting(selector, pause = 0) {
+    return this.client
+      .pause(pause)
+      .isExisting(selector)
+      .then((isExisting) => expect(isExisting).to.be.false)
+  }
+
   clickOnResumeButton(selector) {
     if (!global.isVisible) {
       return this.client
