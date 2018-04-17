@@ -5,8 +5,9 @@ module.exports = {
     popup_close_button: '/html/body/div[1]/div/div/div[3]/button[1]',
     stop_button: '.onboarding-button-stop',
     start_button: '//div[@class="onboarding-welcome"]//button[contains(text(), "Start")]',
-    resume_button: '//*[@id="nav-sidebar"]//button[contains(@class, "resume")]',
+    resume_button: '/html/body/nav/div/div[3]/button', /*'//*[@id="nav-sidebar"]//button[contains(@class, "resume")]'*/
     ready_button: '//*[@id="onboarding-welcome"]//button[contains(@class, "onboarding-button-next") and contains(text(), "I\'m ready")]',
+    payement_check_button: '//*[@id="content"]//a[contains(@href,"%s")]',
     welcomeSteps: {
       next_button: '//div[contains(@class, "onboarding-tooltip")]//button[contains(@class, "onboarding-button-next")]',
       message_value: '//div[contains(@class, "onboarding-tooltip")]/div[@class="content"]',

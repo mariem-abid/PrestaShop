@@ -1,4 +1,5 @@
 const {Menu} = require('../../selectors/BO/menu.js');
+let promise = Promise.resolve();
 
 module.exports = {
   checkConfigPage: function (client, ModulePage, moduleTechName) {
@@ -47,7 +48,7 @@ module.exports = {
     test('should click on "Enable" button', () => client.waitForExistAndClick(ModulePage.enable_module.split('%moduleTechName').join(moduleTechName)));
     test('should check that the success alert message is well displayed', () => client.waitForExistAndClick(AddProductPage.close_validation_button));
   },
-  resetModule: function (client, ModulePage, AddProductPage, Menu, moduleName, moduleTechName) {
+  resetModule: function (client, ModulePage, AddProductPage, moduleName, moduleTechName) {
     test('should go to "Module" page', () => client.goToSubtabMenuPage(Menu.Improve.Modules.modules_menu, Menu.Improve.Modules.modules_services_submenu));
     test('should click on "Installed Modules"', () => client.waitForVisibleAndClick(ModulePage.installed_modules_tabs));
     test('should search for "' + moduleName + '" module in the installed module tab', () => client.waitAndSetValue(ModulePage.modules_search_input, moduleTechName));
@@ -64,15 +65,12 @@ module.exports = {
       for (let i = 0; i < (parseInt((tab["modules_number"].match(/[0-9]+/g)[0]))); i++) {
         promise = client.getModuleAttr(ModulePage.module_list, attribute, i)
       }
-      if (sortType == "name") {
+      if (sortType === "name") {
         return promise
-          .then(() => client.checkSortByName((parseInt((tab["modules_number"].match(/[0-9]+/g)[0])))))
-      } else if (sortType == "price") {
+          .then(() => client.checkSortByName((parseInt((tab["modules_number"].match(/[0-9]+/g)[0])))));
+      } else if (sortType === "price") {
         return promise
-          .then(() => client.checkSortByIncPrice((parseInt((tab["modules_number"].match(/[0-9]+/g)[0])))))
-      } else if (sortType == "price-desc") {
-        return promise
-          .then(() => client.checkSortDesc((parseInt((tab["modules_number"].match(/[0-9]+/g)[0])))))
+          .then(() => client.checkSortByIncPrice((parseInt((tab["modules_number"].match(/[0-9]+/g)[0])))));
       } else {
         return promise
           .then(() => client.checkSortDesc((parseInt((tab["modules_number"].match(/[0-9]+/g)[0])))))
