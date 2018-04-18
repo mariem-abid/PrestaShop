@@ -50,6 +50,7 @@ class CommonClient {
       .waitForVisibleAndClick(selector);
   }
 
+
   closeBoarding(selector) {
     if (global.isVisible) {
       return this.client
@@ -339,23 +340,6 @@ class CommonClient {
       .then((isVisible) => expect(isVisible).to.be.false);
   }
 
-  editObjectData(object) {
-    for (let key in object) {
-      if (object.hasOwnProperty(key) && key !== 'type') {
-        if (typeof object[key] === 'string') {
-          parseInt(object[key]) ? object[key] = (parseInt(object[key]) + 10).toString() : object[key] += 'update';
-        } else if (typeof object[key] === 'number') {
-          object[key] += 10;
-        } else if (typeof object[key] === 'object') {
-          this.editObjectData(object[key]);
-        }
-      }
-    }
-  }
-
-  deleteObjectElement(object, pos) {
-    delete object[pos];
-  }
 
   checkParamFromURL(param, value, pause = 0) {
     return this.client

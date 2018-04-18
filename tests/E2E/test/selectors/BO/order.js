@@ -24,6 +24,9 @@ module.exports = {
     search_order_button: '//*[@id="submitFilterButtonorder"]',
     first_order: '//*[@id="form-order"]//table//tbody//tr[1]//a',
     transform_guest_customer_button: '//*[@id="content"]//input[@name="submitGuestToCustomer"]',
+    check_order_id: '//*[@id="table-cart"]//td[3]/span',
+    dropdown_button: '//*[@id="table-cart"]/tbody//button[@data-toggle="dropdown"]',
+    delete_button: '//*[@id="table-cart"]//a[@class="delete"]'
   },
 
   CreateOrder: {
