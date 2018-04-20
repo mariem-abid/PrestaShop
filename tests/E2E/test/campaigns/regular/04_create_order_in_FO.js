@@ -70,7 +70,7 @@ scenario('Check the created order in the Back Office', () => {
       return promise
         .then(() => client.scrollTo(OrderPage.edit_product_button))
         .then(() => client.waitForExistAndClick(OrderPage.edit_product_button))
-        .then(() => client.checkAttributeValue(OrderPage.product_basic_price, 'value', global.tab["basic_price"].replace('€', '')))
+        .then(() => client.checkAttributeValue(OrderPage.product_basic_price.replace("%NUMBER", 1), 'value', global.tab["basic_price"].replace('€', '')))
     });
     test('should check shipping method ', () => client.checkTextValue(OrderPage.shipping_method, global.tab["method"].split('\n')[0], 'contain'));
   }, "order");

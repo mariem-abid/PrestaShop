@@ -23,13 +23,13 @@ module.exports = {
        */
       test('should change quantity to "5" using the keyboard and push "Enter"', () => {
         return promise
-          .then(() => client.waitAndSetValue(CheckoutOrderPage.quantity_input, '5'))
+          .then(() => client.waitAndSetValue(CheckoutOrderPage.quantity_input.replace('%NUMBER', 1), '5'))
           .then(() => client.keys('\uE007'))
           .then(() => client.pause(1000));
       });
-      test('should check that the quantity is equal to "5"', () => client.checkAttributeValue(CheckoutOrderPage.quantity_input, 'value', '5', 'equal', 1000));
-      test('should change quantity to "4" using the keyboard without pushing "Enter"', () => client.waitAndSetValue(CheckoutOrderPage.quantity_input, '4'));
-      test('should check that the quantity is equal to "4"', () => client.checkAttributeValue(CheckoutOrderPage.quantity_input, 'value', '4', 'equal', 1000));
+      test('should check that the quantity is equal to "5"', () => client.checkAttributeValue(CheckoutOrderPage.quantity_input.replace('%NUMBER', 1), 'value', '5', 'equal', 1000));
+      test('should change quantity to "4" using the keyboard without pushing "Enter"', () => client.waitAndSetValue(CheckoutOrderPage.quantity_input.replace('%NUMBER', 1), '4'));
+      test('should check that the quantity is equal to "4"', () => client.checkAttributeValue(CheckoutOrderPage.quantity_input.replace('%NUMBER', 1), 'value', '4', 'equal', 1000));
       /**** END ****/
       test('should click on proceed to checkout button 2', () => client.waitForExistAndClick(CheckoutOrderPage.proceed_to_checkout_button));
 
@@ -128,7 +128,7 @@ module.exports = {
       test('should check basic product price', () => {
         return promise
           .then(() => client.scrollWaitForExistAndClick(OrderPage.edit_product_button))
-          .then(() => client.checkAttributeValue(OrderPage.product_basic_price, 'value', global.tab["basic_price"].replace('€', '')))
+          .then(() => client.checkAttributeValue(OrderPage.product_basic_price.replace("%NUMBER", 1), 'value', global.tab["basic_price"].replace('€', '')))
       });
       test('should check shipping method', () => client.checkTextValue(OrderPage.shipping_method, global.tab["method"].split('\n')[0], 'contain'));
     }, "order");
