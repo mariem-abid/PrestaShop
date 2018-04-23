@@ -3,6 +3,7 @@ const {OrderPage} = require('../selectors/BO/order');
 const {CreateOrder} = require('../selectors/BO/order');
 
 global.tab = [];
+global.orders = [];
 
 class Order extends CommonClient {
 
