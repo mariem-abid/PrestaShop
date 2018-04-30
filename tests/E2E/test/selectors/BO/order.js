@@ -45,14 +45,15 @@ module.exports = {
 
   ShoppingCarts: {
     export_carts_button: '//*[@id="page-header-desc-cart-export_cart"]/i',
-    customer_search_input:'//*[@id="table-cart"]//tr[2]/th[4]/input',
-    search_button:'//*[@id="submitFilterButtoncart"]',
-    id:'//*[@id="table-cart"]//tr[%NUMBER]/td[2]',
-    order_id:'//*[@id="table-cart"]//tr[%NUMBER]/td[3]',
-    customer:'//*[@id="table-cart"]//tr[%NUMBER]/td[4]',
-    total:'//*[@id="table-cart"]//tr[%NUMBER]/td[5]',
-    carrier:'//*[@id="table-cart"]//tr[%NUMBER]/td[6]',
-    date:'//*[@id="table-cart"]//tr[%NUMBER]/td[7]',
-    customer_online:'//*[@id="table-cart"]//tr[%NUMBER]/td[8]'
+    customer_search_input: '//*[@id="table-cart"]//tr[2]/th[4]/input',
+    search_button: '//*[@id="submitFilterButtoncart"]',
+    id: '//*[@id="table-cart"]//tr[%NUMBER]/td[2]',
+    order_id: '//*[@id="table-cart"]//tr[%NUMBER]/td[3]',
+    customer: '//*[@id="table-cart"]//tr[%NUMBER]/td[4]',
+    total: '//*[@id="table-cart"]//tr[%NUMBER]/td[5]',
+    carrier: '//*[@id="table-cart"]//tr[%NUMBER]/td[6]',
+    date: '//*[@id="table-cart"]//tr[%NUMBER]/td[7]',
+    customer_online: '//*[@id="table-cart"]//tr[%NUMBER]/td[8]',
+    id_shopping_carts: 'table-cart'
   }
 };
