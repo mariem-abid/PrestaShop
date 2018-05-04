@@ -149,7 +149,6 @@ module.exports = {
               global.tab["customer_online"] === 'Yes' ? global.tab["customer_online"] = 1 : global.tab["customer_online"] = 0;
               global.tab["date"] = dateFormat(global.tab["date"], "yyyy-mm-dd hh:MM:ss");
               global.orders.push(parseInt(global.tab["id"]) + ';' + global.tab["order_id"] + ';' + '"' + global.tab["customer"] + '"' + ';' + global.tab["total"] + ';' + global.tab["carrier"] + ';' + '"' + global.tab["date"] + '"' + ';' + global.tab["customer_online"]);
-              console.log(global.orders);
             });
         });
       }
@@ -159,8 +158,8 @@ module.exports = {
     scenario('Check the similarity between the contents of the file and the shopping carts', client => {
       test('should export carts', () => client.downloadCart(ShoppingCarts.export_carts_button));
       test('should check the file name', () => client.checkFile(global.downloadsFolderPath, global.exportCartFileName));
-      test('should read the file', () => client.readFile(global.downloadsFolderPath, global.exportCartFileName));
+      test('should read the file', () => client.readFile(global.downloadsFolderPath, global.exportCartFileName, 1000));
       test('should check the similarity between the contents of the file and the shopping carts', () => client.compareFileAndShoppingCarts(1000));
-    }, 'order');
+    }, 'order',true);
   }
 };

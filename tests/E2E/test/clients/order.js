@@ -3,9 +3,8 @@ const {OrderPage} = require('../selectors/BO/order');
 const {CreateOrder} = require('../selectors/BO/order');
 let common = require('../common.webdriverio');
 let fs = require('fs');
-global.tab = [];
 global.orders = [];
-global.ligneFile = [];
+global.lineFile = [];
 
 class Order extends CommonClient {
 
@@ -58,46 +57,33 @@ class Order extends CommonClient {
       }, selector)
       .then((count) => {
         global.shoppingCartsNumber = count.value;
-        console.log(global.shoppingCartsNumber);
       });
   }
 
-
   readFile(folderPath, fileName, pause = 0) {
     fs.readFile(folderPath + fileName, {encoding: 'utf-8'}, function (err, data) {
-      if (!err) {
-        global.ligneFile = data.split("\n");
-        console.log((global.ligneFile));
-      } else {
-        console.log(err);
-      }
+      global.lineFile = data.split("\n");
     });
     return this.client
+      .pause(pause)
+      .then(() => expect(global.lineFile, "No data").to.be.not.empty)
   }
-
 
   checkFile(folderPath, fileName, pause = 0) {
     fs.stat(folderPath + fileName, function (err, stats) {
       err === null && stats.isFile() ? global.existingFile = true : global.existingFile = false;
-      console.log(err);
-      console.log(stats);
     });
     return this.client
       .pause(pause)
       .then(() => expect(global.existingFile).to.be.true)
   }
 
-
   compareFileAndShoppingCarts(pause = 0) {
     return this.client
       .pause(pause)
       .then(() => {
-        for (let i = 1; i < (global.ligneFile.length - 1); i++) {
-          if (global.ligneFile[i] === (global.orders[i - 1])) {
-            console.log("ok");
-          } else {
-            console.log("not ok");
-          }
+        for (let i = 1; i < (global.lineFile.length - 1); i++) {
+          expect(global.lineFile[i]).to.be.equal(global.orders[i - 1])
         }
       })
   }
