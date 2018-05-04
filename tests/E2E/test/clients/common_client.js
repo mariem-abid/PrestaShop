@@ -3,7 +3,6 @@ const {selector} = require('../globals.webdriverio.js');
 let path = require('path');
 let fs = require('fs');
 let pdfUtil = require('pdf-to-text');
-
 global.tab = [];
 global.isOpen = false;
 
@@ -56,8 +55,9 @@ class CommonClient {
             .waitForExistAndClick(menuSelector, 2000)
             .pause(2000)
             .waitForVisibleAndClick(selector);
-        }})
-      .then(()=> this.client.pause(4000));
+        }
+      })
+      .then(() => this.client.pause(4000));
   }
 
   closeBoarding(selector) {
@@ -261,7 +261,6 @@ class CommonClient {
     pdfUtil.pdfToText(folderPath + fileName + '.pdf', function (err, data) {
       global.indexText = data.indexOf(text)
     });
-
     return this.client
       .pause(2000)
       .then(() => expect(global.indexText, text + "does not exist in the PDF document").to.not.equal(-1));
@@ -348,24 +347,6 @@ class CommonClient {
       .pause(2000)
       .isVisible(selector)
       .then((isVisible) => expect(isVisible).to.be.false);
-  }
-
-  editObjectData(object) {
-    for (let key in object) {
-      if (object.hasOwnProperty(key) && key !== 'type') {
-        if (typeof object[key] === 'string') {
-          parseInt(object[key]) ? object[key] = (parseInt(object[key]) + 10).toString() : object[key] += 'update';
-        } else if (typeof object[key] === 'number') {
-          object[key] += 10;
-        } else if (typeof object[key] === 'object') {
-          this.editObjectData(object[key]);
-        }
-      }
-    }
-  }
-
-  deleteObjectElement(object, pos) {
-    delete object[pos];
   }
 
   checkParamFromURL(param, value, pause = 0) {
@@ -455,7 +436,6 @@ class CommonClient {
         document.getElementById(selector).style.display = 'none';
       }, selector);
   }
-
 }
 
 module.exports = CommonClient;

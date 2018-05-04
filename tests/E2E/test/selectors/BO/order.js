@@ -25,7 +25,6 @@ module.exports = {
     first_order: '//*[@id="form-order"]//table//tbody//tr[1]//a',
     transform_guest_customer_button: '//*[@id="content"]//input[@name="submitGuestToCustomer"]',
   },
-
   CreateOrder: {
     new_order_button: '//*[@id="page-header-desc-order-new_order"]',
     customer_search_input: '//*[@id="customer"]',
@@ -41,5 +40,18 @@ module.exports = {
     product_combination: '//*[@class="id_product_attribute"]',
     basic_price_value: '//*[@id="customer_cart"]//tr[1]//input[@class="product_unit_price"]',
     product_select: '//*[@id="id_product"]'
+  },
+  ShoppingCarts: {
+    export_carts_button: '//*[@id="page-header-desc-cart-export_cart"]/i',
+    customer_search_input: '//*[@id="table-cart"]//tr[2]/th[4]/input',
+    search_button: '//*[@id="submitFilterButtoncart"]',
+    id: '//*[@id="table-cart"]//tr[%NUMBER]/td[2]',
+    order_id: '//*[@id="table-cart"]//tr[%NUMBER]/td[3]',
+    customer: '//*[@id="table-cart"]//tr[%NUMBER]/td[4]',
+    total: '//*[@id="table-cart"]//tr[%NUMBER]/td[5]',
+    carrier: '//*[@id="table-cart"]//tr[%NUMBER]/td[6]',
+    date: '//*[@id="table-cart"]//tr[%NUMBER]/td[7]',
+    customer_online: '//*[@id="table-cart"]//tr[%NUMBER]/td[8]',
+    id_shopping_carts: 'table-cart'
   }
 };

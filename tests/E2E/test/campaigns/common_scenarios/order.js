@@ -3,10 +3,10 @@ const {CheckoutOrderPage} = require('../../selectors/FO/order_page');
 const {accountPage} = require('../../selectors/FO/add_account_page');
 const {OrderPage} = require('../../selectors/BO/order');
 const {Menu} = require('../../selectors/BO/menu.js');
-
+const {ShoppingCarts} = require('../../selectors/BO/order');
+let dateFormat = require('dateformat');
 let data = require('../../datas/customer_and_address_data');
 let promise = Promise.resolve();
-
 module.exports = {
   createOrderFO: function (authentication = "connected") {
     scenario('Create order in the Front Office', client => {
@@ -32,13 +32,12 @@ module.exports = {
       test('should check that the quantity is equal to "4"', () => client.checkAttributeValue(CheckoutOrderPage.quantity_input, 'value', '4', 'equal', 1000));
       /**** END ****/
       test('should click on proceed to checkout button 2', () => client.waitForExistAndClick(CheckoutOrderPage.proceed_to_checkout_button));
-
       if (authentication === "create_account" || authentication === "guest") {
         scenario('Create new account', client => {
           test('should choose a "Social title"', () => client.waitForExistAndClick(accountPage.radio_button_gender));
           test('should set the "First name" input', () => client.waitAndSetValue(accountPage.firstname_input, data.customer.firstname));
           test('should set the "Last name" input', () => client.waitAndSetValue(accountPage.lastname_input, data.customer.lastname));
-          if (authentication === "create_account") {
+          if (authentication === "create_account" || authentication === "guest") {
             test('should set the "Email" input', () => client.waitAndSetValue(accountPage.new_email_input, data.customer.email.replace("%ID", date_time)));
             test('should set the "Password" input', () => client.waitAndSetValue(accountPage.new_password_input, data.customer.password));
           } else {
@@ -69,7 +68,6 @@ module.exports = {
           test('should click on confirm address button', () => client.waitForExistAndClick(CheckoutOrderPage.checkout_step2_continue_button));
         }, 'common_client');
       }
-
       scenario('Choose "SHIPPING METHOD"', client => {
         test('should choose shipping method my carrier', () => client.waitForExistAndClick(CheckoutOrderPage.shipping_method_option));
         test('should create message', () => client.waitAndSetValue(CheckoutOrderPage.message_textarea, 'Order message test'));
@@ -132,5 +130,36 @@ module.exports = {
       });
       test('should check shipping method', () => client.checkTextValue(OrderPage.shipping_method, global.tab["method"].split('\n')[0], 'contain'));
     }, "order");
+  },
+  checkShoppingCarts: function () {
+    scenario('Retrieve informations from the shopping carts', client => {
+      for (let i = 1; i <= global.shoppingCartsNumber; i++) {
+        test('should retrieve informations from the shopping carts', () => {
+          return promise
+            .then(() => client.getTextInVar(ShoppingCarts.id.replace('%NUMBER', i), "id"))
+            .then(() => client.getTextInVar(ShoppingCarts.order_id.replace('%NUMBER', i), "order_id"))
+            .then(() => client.getTextInVar(ShoppingCarts.customer.replace('%NUMBER', i), "customer"))
+            .then(() => client.getTextInVar(ShoppingCarts.total.replace('%NUMBER', i), "total"))
+            .then(() => client.getTextInVar(ShoppingCarts.carrier.replace('%NUMBER', i), "carrier"))
+            .then(() => client.getTextInVar(ShoppingCarts.date.replace('%NUMBER', i), "date"))
+            .then(() => client.getTextInVar(ShoppingCarts.customer_online.replace('%NUMBER', i), "customer_online"))
+            .then(() => {
+              parseInt(global.tab["order_id"]) ? global.tab["order_id"] = parseInt(global.tab["order_id"]) : global.tab["order_id"] = '"' + global.tab["order_id"] + '"';
+              global.tab["carrier"] === '--' ? global.tab["carrier"] = '' : global.tab["carrier"] = '"' + global.tab["carrier"] + '"';
+              global.tab["customer_online"] === 'Yes' ? global.tab["customer_online"] = 1 : global.tab["customer_online"] = 0;
+              global.tab["date"] = dateFormat(global.tab["date"], "yyyy-mm-dd hh:MM:ss");
+              global.orders.push(parseInt(global.tab["id"]) + ';' + global.tab["order_id"] + ';' + '"' + global.tab["customer"] + '"' + ';' + global.tab["total"] + ';' + global.tab["carrier"] + ';' + '"' + global.tab["date"] + '"' + ';' + global.tab["customer_online"]);
+            });
+        });
+      }
+    }, 'order');
+  },
+  checkSimilarity: function () {
+    scenario('Check the similarity between the contents of the file and the shopping carts', client => {
+      test('should export carts', () => client.downloadCart(ShoppingCarts.export_carts_button));
+      test('should check the file name', () => client.checkFile(global.downloadsFolderPath, global.exportCartFileName));
+      test('should read the file', () => client.readFile(global.downloadsFolderPath, global.exportCartFileName, 1000));
+      test('should check the similarity between the contents of the file and the shopping carts', () => client.compareFileAndShoppingCarts(1000));
+    }, 'order', true);
   }
 };
