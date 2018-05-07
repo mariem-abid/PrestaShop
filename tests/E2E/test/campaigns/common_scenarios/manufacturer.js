@@ -19,7 +19,7 @@ let promise = Promise.resolve();
  * var addressData={
   * last_name: 'PrestaShop',
   * first_name: 'PrestaShop',
-  * address: '12 rue d\'amesterdam',
+  * address: 'Amsterdam street',
   * second_address: 'RDC',
   * postal_code: '75009',
   * city: 'Paris',
@@ -73,6 +73,7 @@ module.exports = {
     scenario('Check that the manufacturer is well created in the Front Office', client => {
       test('should click on the "Sitemap"', () => client.scrollWaitForExistAndClick(BrandsFO.site_map, 3000));
       test('should go to the "Brands" page', () => client.waitForExistAndClick(BrandsFO.brands_page));
+      test('should verify the picture of the manufacturer', () => client.checkAttributeValue(BrandsFO.image.replace('%s', manufacturerInformation.name.toLowerCase() + date_time),'alt',manufacturerInformation.name+date_time,'equal',1000));
       test('should go to the "Brands" informations', () => client.scrollWaitForExistAndClick(BrandsFO.brands_info.replace('%s', manufacturerInformation.name.toLowerCase() + date_time)));
       test('should verify the short description of the manufacturer', () => client.checkTextValue(BrandsFO.short_description, manufacturerInformation.short_desc));
       test('should verify the description of the manufacturer', () => client.checkTextValue(BrandsFO.description, manufacturerInformation.description));

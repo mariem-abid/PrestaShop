@@ -22,7 +22,7 @@ let productData = {
 let manufacturerAddress = {
   last_name: 'PrestaShop',
   first_name: 'PrestaShop',
-  address: '12 rue d\'amesterdam',
+  address: 'Amsterdam street',
   second_address: 'RDC',
   postal_code: '75009',
   city: 'Paris',
@@ -36,21 +36,21 @@ scenario('Create a new manufacturer in the Back Office', () => {
     test('should login successfully in the Back Office', () => client.signInBO(AccessPageBO));
   }, 'common_client');
   manufacturer.createManufacturer(manufacturerInformation);
-  scenario('Go to the Front Office', client => {
+ scenario('Go to the Front Office', client => {
     test('should go to the Front Office', () => client.waitForExistAndClick(AccessPageBO.shopname, 2000));
     test('should switch to the Front Office window', () => client.switchWindow(1));
     test('should change the Front Office language to "English"', () => client.changeLanguage());
   }, 'common_client');
-  manufacturer.checkManufacturerInFO(manufacturerInformation);
-  scenario('Go to the back Office', client => {
-    test('should go to the Back office page', () => client.switchWindow(0));
+ manufacturer.checkManufacturerInFO(manufacturerInformation);
+  scenario('Go back to the back Office', client => {
+    test('should go back to the Back office page', () => client.switchWindow(0));
   }, 'common_client');
   product.createProduct(AddProductPage, productData);
-  scenario('Go to the Front Office', client => {
+  scenario('Go back to the Front Office', client => {
     test('should switch to the Front office page', () => client.switchWindow(1));
   }, 'common_client');
   manufacturer.checkProductWithManufacturerInFO(manufacturerInformation);
-  scenario('Go to the Back Office', client => {
+  /*scenario('Go to the Back Office', client => {
     test('should switch to the Back office page', () => client.switchWindow(0));
   }, 'common_client');
   manufacturer.updateManufacturer(manufacturerInformation);
@@ -76,13 +76,13 @@ scenario('Create a new manufacturer in the Back Office', () => {
   }, 'common_client');
   manufacturer.createManufacturer(manufacturerInformation)
   manufacturer.deleteManufacturerAddress(manufacturerInformation, manufacturerAddress);
-  scenario('Delete the "Graphic Corner" manufacturer', client => {
+  /*scenario('Delete the "Graphic Corner" manufacturer', client => {
     test('should search for brand', () => client.searchByValue(Brands.search_input, Brands.search_button, 'Graphic Corner'));
     test('should click on "the icon"', () => client.waitForExistAndClick(Brands.icon));
     test('should click on "Delete" action', () => client.waitForExistAndClick(Brands.delete_button));
     test('should accept the alert', () => client.alertAccept());
     test('should verify the appearance of the green validation', () => client.checkTextValue(CatalogPage.success_panel, '×\nSuccessful deletion.'));
     test('should click on "Reset" button', () => client.waitForExistAndClick(Brands.reset_button));
-  }, 'manufacturers');
-}, 'manufacturers', true);
+  }, 'manufacturers');*/
+}, 'manufacturers');
 
