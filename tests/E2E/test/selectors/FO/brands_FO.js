@@ -6,6 +6,7 @@ module.exports = {
     image: '//*[@id="main"]//ul/li[@class="brand"]//a[contains(@href,"%s")]/img',
     short_description: '//*[@id="manufacturer-short_description"]/p',
     description: '//*[@id="manufacturer-description"]/p',
-    all_products: '//*[@id="main"]//div[@class="brand-products"]/a[%id]'
+    all_products: '//*[@id="main"]//div[@class="brand-products"]/a[%id]',
+    product_name:'//*[@id="js-product-list"]//h2/a[contains(@href,"%s")]'
   }
 };

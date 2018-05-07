@@ -36,7 +36,7 @@ scenario('Create a new manufacturer in the Back Office', () => {
     test('should login successfully in the Back Office', () => client.signInBO(AccessPageBO));
   }, 'common_client');
   manufacturer.createManufacturer(manufacturerInformation);
- scenario('Go to the Front Office', client => {
+ /*scenario('Go to the Front Office', client => {
     test('should go to the Front Office', () => client.waitForExistAndClick(AccessPageBO.shopname, 2000));
     test('should switch to the Front Office window', () => client.switchWindow(1));
     test('should change the Front Office language to "English"', () => client.changeLanguage());
@@ -49,12 +49,12 @@ scenario('Create a new manufacturer in the Back Office', () => {
   scenario('Go back to the Front Office', client => {
     test('should switch to the Front office page', () => client.switchWindow(1));
   }, 'common_client');
-  manufacturer.checkProductWithManufacturerInFO(manufacturerInformation);
-  /*scenario('Go to the Back Office', client => {
+  manufacturer.checkProductWithManufacturerInFO(manufacturerInformation,productData);
+  scenario('Go back to the Back Office', client => {
     test('should switch to the Back office page', () => client.switchWindow(0));
-  }, 'common_client');
+  }, 'common_client');*/
   manufacturer.updateManufacturer(manufacturerInformation);
-  scenario('Go to the Front Office', client => {
+  /*scenario('Go to the Front Office', client => {
     test('should go to the Front Office', () => client.waitForExistAndClick(AccessPageBO.shopname, 2000));
     test('should switch to the Front Office window', () => client.switchWindow(2));
     test('should change the Front Office language to "English"', () => client.changeLanguage());

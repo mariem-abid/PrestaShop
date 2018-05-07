@@ -40,11 +40,6 @@ class CommonClient {
     return this.client.waitForVisibleElement(selector, timeout);
   }
 
-  waitForExist(selector, timeout = 90000) {
-    return this.client
-      .waitForExist(selector, timeout);
-  }
-
   goToSubtabMenuPage(menuSelector, selector) {
     return this.client
       .isOpen(menuSelector)
@@ -177,6 +172,18 @@ class CommonClient {
       .waitForExist(selector, timeout)
       .then(() => this.client.getAttribute(selector, attribute))
       .then((variable) => global.tab[globalVar] = variable);
+  }
+  setTextToEditor(selector, content) {
+    return this.client
+      .click(selector)
+      .execute(function (content) {
+        return (tinyMCE.activeEditor.setContent(content));
+      }, content);
+  }
+
+  waitForExist(selector, timeout = 90000) {
+    return this.client
+      .waitForExist(selector, timeout)
   }
 
   checkTextValue(selector, textToCheckWith, parameter = 'equal', pause = 0) {
@@ -315,14 +322,6 @@ class CommonClient {
       .then((isExisting) => expect(isExisting).to.be.false);
   }
 
-  isNotExisting(selector, pause = 0) {
-    return this.client
-      .pause(pause)
-      .scrollTo(selector)
-      .isExisting(selector)
-      .then((isExisting) => expect(isExisting).to.be.false)
-  }
-
   clickOnResumeButton(selector) {
     if (!global.isVisible) {
       return this.client
@@ -434,27 +433,6 @@ class CommonClient {
       .execute(function (content) {
         return (tinyMCE.activeEditor.setContent(content));
       }, content);
-  }
-
-  editObjectData(object, type = '') {
-    for (let key in object) {
-      if (object.hasOwnProperty(key) && key !== 'type') {
-        if (typeof object[key] === 'string') {
-          parseInt(object[key]) ? object[key] = (parseInt(object[key]) + 10).toString() : object[key] += 'update';
-        } else if (typeof object[key] === 'number') {
-          object[key] += 10;
-        } else if (typeof object[key] === 'object') {
-          this.editObjectData(object[key]);
-        }
-      }
-      if (type !== '') {
-        object['type'] = type;
-      }
-    }
-  }
-
-  deleteObjectElement(object, pos) {
-    delete object[pos];
   }
 
   setAttributeById(selector) {

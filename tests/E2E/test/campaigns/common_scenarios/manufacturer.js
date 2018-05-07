@@ -33,8 +33,8 @@ module.exports = {
       test('should go to "Brands & Suppliers" page', () => client.goToSubtabMenuPage(Menu.Sell.Catalog.catalog_menu, Menu.Sell.Catalog.manufacturers_submenu));
       test('should click on "Add new brand" button', () => client.waitForExistAndClick(Brands.new_brand_button));
       test('should set the "Name" input', () => client.waitAndSetValue(Brands.name_input, manufacturerInformation.name + date_time));
-      test('should set the "short description" input', () => client.setTextToEditor(Brands.short_desc_textarea, manufacturerInformation.short_desc));
-      test('should set the "description" input', () => client.setTextToEditor(Brands.desc_textarea, manufacturerInformation.description));
+      test('should set the "short description" input', () => client.setTextToEditor(Brands.description.replace('%NUMBER',1), manufacturerInformation.short_desc));
+      test('should set the "description" input', () => client.setTextToEditor(Brands.description.replace('%NUMBER',3), manufacturerInformation.description));
       test('should upload "Picture" to the brand', () => client.uploadPicture(manufacturerInformation.image, Brands.image_input, "logo"));
       test('should set the "Meta title" input', () => client.waitAndSetValue(Brands.meta_title_input, manufacturerInformation.meta_title));
       test('should set the "Meta description" input', () => client.waitAndSetValue(Brands.meta_description_input, manufacturerInformation.meta_description));
@@ -54,16 +54,16 @@ module.exports = {
           .then(() => client.waitForExistAndClick(Brands.update_button))
           .then(() => client.editObjectData(manufacturerInformation));
       });
-      test('should set the "short description" input', () => {
+    test('should set the "short description" input', () => {
         return promise
-          .then(() => client.waitForExist(Brands.short_desc_textarea, 3000))
-          .then(() => client.setTextToEditor(Brands.short_desc_textarea, manufacturerInformation.short_desc));
+         // .then(() => client.waitForExist(Brands.short_desc_textarea, 3000))
+          .then(() => client.setTextToEditor(Brands.description.replace('%NUMBER',1), manufacturerInformation.short_desc));
       });
       test('should set the "description" input', () => {
         return promise
-          .then(() => client.waitForExist(Brands.desc_textarea, 3000))
-          .then(() => client.setTextToEditor(Brands.desc_textarea, manufacturerInformation.description));
-      });
+        //  .then(() => client.waitForExist(Brands.desc_textarea,1000))
+        .then(() => client.setTextToEditor(Brands.description.replace('%NUMBER',3), manufacturerInformation.description));
+     });
       test('should click on "Save" button', () => client.waitForExistAndClick(Brands.save_button));
       test('should verify the appearance of the green validation', () => client.checkTextValue(CatalogPage.success_panel, '×\nSuccessful update.'));
       test('should click on "Reset" button', () => client.waitForExistAndClick(Brands.reset_button));
@@ -86,11 +86,13 @@ module.exports = {
       test('should verify that the manufacturer is not exist', () => client.isNotExisting(BrandsFO.brands_info.replace('%s', manufacturerInformation.name.toLowerCase() + date_time)));
     }, 'manufacturers');
   },
-  checkProductWithManufacturerInFO(manufacturerInformation) {
+  checkProductWithManufacturerInFO(manufacturerInformation,productData) {
     scenario('Check that the manufacturer has a product', client => {
       test('should click on the "Sitemap"', () => client.waitForExistAndClick(BrandsFO.site_map));
       test('should go to the "Brands" page', () => client.waitForExistAndClick(BrandsFO.brands_page));
       test('should verify that the manufacturer has product', () => client.scrollWaitForExistAndClick(BrandsFO.brands_info.replace('%s', manufacturerInformation.name.toLowerCase() + date_time)));
+      test('should verify the product name', () => client.checkTextValue(BrandsFO.product_name.replace('%s', productData.name.toLowerCase() + date_time),productData.name+date_time));
+
     }, 'manufacturers');
   },
   deleteManufacturer(manufacturerInformation, manufacturerAddress) {
