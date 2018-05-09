@@ -164,7 +164,7 @@ module.exports = {
     catalog_product_quantity: '//*[@id="product_catalog_list"]/div[2]/div/table/tbody/tr/td[7]',
     catalog_product_online: '//*[@id="product_catalog_list"]/div[2]/div/table/tbody/tr/td[8]/a/i',
     catalog_reset_filter: '//*[@id="product_catalog_list"]/div[2]/div/table/thead/tr[2]/th[9]/button[2]',
-    catalog_submit_filter:'//*[@id="product_catalog_list"]//button[@type="submit"]',
+    catalog_submit_filter: '//*[@id="product_catalog_list"]//button[@type="submit"]',
     catalog_home: '//*[@id="form_step1_categories"]/ul/li/div/label',
     catalog_first_element_radio: '//*[@id="form_step1_categories"]/ul/li/ul/li[1]/div',
     catalog_second_element_radio: '//*[@id="form_step1_categories"]/ul/li/ul/li[2]/div',
@@ -181,7 +181,11 @@ module.exports = {
     combination_first_table: '//*[@id="accordion_combinations"]',
     combination_second_table: '//*[@id="accordion_combinations"]//tr[2]',
     home_delete_button: '//*[@id="ps_categoryTags"]/span[1]/a',
-    created_category: '//*[@id="ps_categoryTags"]/span[2]/span'
+    created_category: '//*[@id="ps_categoryTags"]/span[2]/span',
+    add_brand_button: '//*[@id="add_brand_button"]',
+    brand_select: '//*[@id="manufacturer-content"]/div/div[1]/fieldset/span/span[1]/span',
+    search_brand: '/html/body/span[4]/span/span[1]/input',
+    brand_click: '/html/body/span[4]/span/span[2]/ul/li'
   },
 
   ProductList: {

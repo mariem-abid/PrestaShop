@@ -56,8 +56,9 @@ class CommonClient {
             .waitForExistAndClick(menuSelector, 2000)
             .pause(2000)
             .waitForVisibleAndClick(selector);
-        }})
-      .then(()=> this.client.pause(4000));
+        }
+      })
+      .then(() => this.client.pause(4000));
   }
 
   closeBoarding(selector) {
@@ -267,6 +268,13 @@ class CommonClient {
       .then(() => expect(global.indexText, text + "does not exist in the PDF document").to.not.equal(-1));
   }
 
+  isNotExisting(selector, pause = 0) {
+    return this.client
+      .pause(pause)
+      .isExisting(selector)
+      .then((isExisting) => expect(isExisting).to.be.false);
+  }
+
   waitForVisible(selector, timeout = 90000) {
     return this.client
       .waitForVisible(selector, timeout);
@@ -308,13 +316,6 @@ class CommonClient {
       .then((isExisting) => expect(isExisting).to.be.true);
   }
 
-  isNotExisting(selector, pause = 0) {
-    return this.client
-      .pause(pause)
-      .isExisting(selector)
-      .then((isExisting) => expect(isExisting).to.be.false);
-  }
-
   clickOnResumeButton(selector) {
     if (!global.isVisible) {
       return this.client
@@ -348,24 +349,6 @@ class CommonClient {
       .pause(2000)
       .isVisible(selector)
       .then((isVisible) => expect(isVisible).to.be.false);
-  }
-
-  editObjectData(object) {
-    for (let key in object) {
-      if (object.hasOwnProperty(key) && key !== 'type') {
-        if (typeof object[key] === 'string') {
-          parseInt(object[key]) ? object[key] = (parseInt(object[key]) + 10).toString() : object[key] += 'update';
-        } else if (typeof object[key] === 'number') {
-          object[key] += 10;
-        } else if (typeof object[key] === 'object') {
-          this.editObjectData(object[key]);
-        }
-      }
-    }
-  }
-
-  deleteObjectElement(object, pos) {
-    delete object[pos];
   }
 
   checkParamFromURL(param, value, pause = 0) {
