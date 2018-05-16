@@ -7,6 +7,8 @@ let path = require('path');
 global.productIdElement = [];
 global.productsTable = [];
 global.productsSortedTable = [];
+global.productsInformations = [];
+global.productPrice = [];
 
 class Product extends CommonClient {
 
@@ -176,29 +178,81 @@ class Product extends CommonClient {
    * @param sorted: to get the data after sort
    * @returns {*}
    */
-  getProductsInformation(product_list, i, sorted = false) {
+  getProductsInformation(product_list, i, sortBy, sorted = false) {
     return this.client
+      .pause(2000)
       .getText(product_list.replace("%ID", i + 1)).then(function (name) {
         if (sorted) {
-          productsSortedTable[i] = name.toLowerCase();
+          sortBy === 'price' ? productsSortedTable[i] = parseFloat(name.toLowerCase().replace("€", "")) : productsSortedTable[i] = name.toLowerCase();
         } else {
-          productsTable[i] = name.toLowerCase();
+          sortBy === 'price' ? productsTable[i] = parseFloat(name.toLowerCase().replace("€", "")) : productsTable[i] = name.toLowerCase();
+        }
+      });
+  }
+
+  getSearchProducts(selector, i) {
+    return this.client
+      .getText(selector.replace("%ID", i + 1)).then(function (attribut) {
+        productsInformations[i] = attribut.toLowerCase();
+      });
+  }
+
+  checkSearchProduct(searchBy, min, max) {
+    return this.client
+      .pause(2000)
+      .then(() => {
+        if (searchBy === 'name') {
+          for (let k = 0; k < (productsInformations.length); k++) {
+            expect(productsInformations[k]).to.contain("mug");
+          }
+        }
+        else if (searchBy === 'category') {
+          for (let k = 0; k < (productsInformations.length); k++) {
+            expect(productsInformations[k]).to.be.equal("art");
+          }
+        }
+        else if (searchBy === 'price') {
+          for (let k = 0; k < (productsInformations.length); k++) {
+            global.productPrice = productsInformations[k].split('€');
+            let price = productPrice[1];
+            expect(price >= min && price <= max).to.be.true;
+          }
+        }
+        else if (searchBy === 'min_quantity') {
+          for (let k = 0; k < (productsInformations.length); k++) {
+            expect(productsInformations[k] >= min).to.be.true;
+          }
+        }
+        else if (searchBy === 'quantity' || searchBy === 'id') {
+          for (let k = 0; k < (productsInformations.length); k++) {
+            expect(productsInformations[k] >= min && productsInformations[k] <= max).to.be.true;
+          }
+        }
+        else if (searchBy === 'active_status') {
+          for (let k = 0; k < (productsInformations.length); k++) {
+            expect(productsInformations[k]).to.be.equal("check");
+          }
+        }
+        else {
+          for (let k = 0; k < (productsInformations.length); k++) {
+            expect(productsInformations[k]).to.be.equal("clear");
+          }
         }
       });
   }
 
   sortByAsc(sortBy) {
-    if (sortBy === 'id_product') {
+    if (sortBy === 'id_product' || sortBy === 'quantity' || sortBy === 'price') {
       return productsTable.sort(function (a, b) {
         return b - a;
       }).reverse();
     } else {
-      return productsTable.sort();
+      return productsTable.sort()
     }
   }
 
   sortByDesc(sortBy) {
-    if (sortBy === 'id_product') {
+    if (sortBy === 'id_product' || sortBy === 'quantity' || sortBy === 'price') {
       return productsTable.sort(function (a, b) {
         return a - b;
       }).reverse();
@@ -215,13 +269,31 @@ class Product extends CommonClient {
    */
   sortTable(sort_mode, type = 'id_product') {
     return this.client
-      .pause(2000)
       .then(() => {
         this.client
-          .waitUntil(function () {
-            sort_mode === 'ASC' ? this.sortByAsc(type) : this.sortByDesc(type);
-          }, 1000 * global.productsPageNumber);
+        if (sort_mode === 'ASC') {
+          this.sortByAsc(type);
+        }
+        else {
+          this.sortByDesc(type);
+        }
       });
+  }
+
+  affiche() {
+    return this.client
+      .pause(1000)
+      .execute(function (variable) {
+        console.log(variable)
+      }, productsTable);
+  }
+
+  affiche1() {
+    return this.client
+      .pause(2000)
+      .execute(function (variable) {
+        console.log(variable)
+      }, productsSortedTable);
   }
 
   /**
@@ -232,10 +304,9 @@ class Product extends CommonClient {
     return this.client
       .pause(1000)
       .then(() => {
-        this.client
-          .waitUntil(function () {
-            expect(productsTable).to.deep.equal(productsSortedTable);
-          }, 1000 * global.productsPageNumber);
+        for (let k = 0; k < (productsTable.length); k++) {
+          expect(productsTable[k]).to.deep.equal(productsSortedTable[k]);
+        }
       });
   }
 

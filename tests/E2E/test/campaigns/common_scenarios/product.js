@@ -131,17 +131,19 @@ module.exports = {
     scenario('Check the sort of products by "' + sortBy.toUpperCase() + '"', client => {
       test('should click on "Sort by ASC" icon', () => {
         for (let j = 0; j < global.productsPageNumber; j++) {
-          promise = client.getProductsInformation(selector, j);
+          promise = client.getProductsInformation(selector, j, sortBy);
         }
         return promise
           .then(() => client.waitForExistAndClick(ProductList.sort_by_icon.replace("%B", sortBy).replace("%W", "asc")));
       });
       test('should check that the products is well sorted by ASC', () => {
         for (let j = 0; j < global.productsPageNumber; j++) {
-          promise = client.getProductsInformation(selector, j, true);
+          promise = client.getProductsInformation(selector, j, sortBy, true);
         }
         return promise
           .then(() => client.sortTable("ASC", sortBy))
+          //.then(() => client.affiche())
+          //.then(() => client.affiche1())
           .then(() => client.checkSortProduct());
       });
       test('should click on "Sort by DESC" icon', () => client.waitForExistAndClick(ProductList.sort_by_icon.replace("%B", sortBy).replace("%W", "desc")));
@@ -151,8 +153,23 @@ module.exports = {
         }
         return promise
           .then(() => client.sortTable("DESC", sortBy))
+          //.then(() => client.affiche())
+          // .then(() => client.affiche1())
           .then(() => client.checkSortProduct());
       });
+    }, 'product/product');
+  },
+
+  productList: function (AddProductPage, selector, searchBy, min = 0, max = 0) {
+    scenario('Check the list of products', client => {
+      test('should check the list of products', () => {
+        for (let j = 0; j < global.productsPageNumber; j++) {
+          promise = client.getSearchProducts(selector, j);
+        }
+        return promise
+          .then(() => client.checkSearchProduct(searchBy, min, max));
+      });
+      test('should click on "Reset" button', () => client.waitForExistAndClick(AddProductPage.catalog_reset_filter));
     }, 'product/product');
   },
 
