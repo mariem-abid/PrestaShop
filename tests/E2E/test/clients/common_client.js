@@ -119,10 +119,22 @@ class CommonClient {
       .waitForExistAndClick(selector, timeout);
   }
 
+  waitForExistAndMiddleClick(selector, pause = 0, timeout = 90000) {
+    return this.client
+      .pause(pause)
+      .waitForExistAndMiddleClick(selector, timeout);
+  }
+
   waitAndSetValue(selector, value, pause = 0, timeout = 90000) {
     return this.client
       .pause(pause)
       .waitAndSetValue(selector, value, timeout);
+  }
+
+  clearElementAndSetValue(selector, value, pause = 0, timeout = 90000) {
+    return this.client
+      .pause(pause)
+      .clearElementAndSetValue(selector, value, timeout);
   }
 
   scrollTo(selector, margin) {
@@ -168,15 +180,23 @@ class CommonClient {
       return this.client
         .waitForExist(selector, timeout)
         .then(() => this.client.getText(selector))
-        .then((variable) => global.tab[globalVar] = variable);
+        .then((variable) => {
+          global.tab[globalVar] = variable;
+          console.log(global.tab[globalVar]);
+
+        });
     }
   }
 
-  getAttributeInVar(selector, attribute, globalVar, timeout = 90000) {
+  getAttributeInVar(selector, attribute, globalVar, pause = 0, timeout = 90000) {
     return this.client
+      .pause(pause)
       .waitForExist(selector, timeout)
       .then(() => this.client.getAttribute(selector, attribute))
-      .then((variable) => global.tab[globalVar] = variable);
+      .then((variable) => {
+        global.tab[globalVar] = variable;
+        console.log(global.tab[globalVar]);
+      });
   }
 
   checkTextValue(selector, textToCheckWith, parameter = 'equal', pause = 0) {
@@ -193,7 +213,11 @@ class CommonClient {
           .pause(pause)
           .waitForExist(selector, 9000)
           .then(() => this.client.getText(selector))
-          .then((text) => expect(text).to.equal(textToCheckWith));
+          .then((text) => {
+            console.log(text);
+            console.log(textToCheckWith);
+            expect(text).to.equal(textToCheckWith)
+          });
         break;
       case "deepequal":
         return this.client
@@ -289,8 +313,8 @@ class CommonClient {
       .refresh();
   }
 
-  switchWindow(id) {
-    return this.client.switchWindow(id);
+  switchWindow(id, refresh = true, pause = 0) {
+    return this.client.switchWindow(id, refresh, pause);
   }
 
   isExisting(selector, pause = 0) {
@@ -456,6 +480,11 @@ class CommonClient {
       }, selector);
   }
 
+  switchToFrameById(id, pause = 0) {
+    return this.client
+      .pause(pause)
+      .frame(id);
+  }
 }
 
 module.exports = CommonClient;

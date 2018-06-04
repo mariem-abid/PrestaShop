@@ -197,6 +197,7 @@ module.exports = {
     summary_tinymce_buttons: '//*[@id="description_short"]//div[contains(@class, "mce-toolbar-grp")]',
     combination_first_table: '//*[@id="accordion_combinations"]',
     combination_second_table: '//*[@id="accordion_combinations"]//tr[2]',
+    combination_quantity_input: '//*[@id="accordion_combinations"]//tr[%NUMBER]//td[contains(text(), "%TEXT")]//following-sibling::td[contains(@class, "quantity")]//input',
     home_delete_button: '//*[@id="ps_categoryTags"]/span[1]/a',
     created_category: '//*[@id="ps_categoryTags"]/span[2]/span',
     preview_link: '//a'

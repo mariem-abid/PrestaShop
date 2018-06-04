@@ -17,6 +17,7 @@ module.exports = {
     cartRules: {
       new_cart_rule_button: '//*[@id="page-header-desc-cart_rule-new_cart_rule"]',
       name_input: '//*[@id="name_1"]',
+      description_input:'//*[@id="cart_rule_informations"]//textarea[@name="description"]',
       generate_button: '//*[@id="cart_rule_informations"]//a[text()=" Generate"]',
       code_input: '//*[@id="code"]',
       conditions_tab: '//*[@id="cart_rule_link_conditions"]',
@@ -37,7 +38,11 @@ module.exports = {
       success_delete_message:'//*[@id="content"]/div[@class="bootstrap"]/div[contains(@class, "success")]',
       filter_name_input: '//*[@id="table-cart_rule"]//input[@name="cart_ruleFilter_name"]',
       filter_search_button: '//*[@id="submitFilterButtoncart_rule"]',
-      edit_button: '//*[@id="table-cart_rule"]//a[@title="Edit"]'
+      edit_button: '//*[@id="table-cart_rule"]//a[@title="Edit"]',
+      highlight_enabled_button:'//*[@id="cart_rule_informations"]//label[@for="highlight_on"]',
+      partial_use_disabled_button:'//*[@id="cart_rule_informations"]//label[@for="partial_use_off"]',
+      total_available_input:'//*[@id="cart_rule_conditions"]//input[@name="quantity"]',
+      total_available_for_each_user_input:'//*[@id="cart_rule_conditions"]//input[@name="quantity_per_user"]'
     }
   }
 };
