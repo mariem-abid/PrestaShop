@@ -31,6 +31,7 @@ module.exports = {
     order_button: '//*[@id="payment-confirmation"]//button',
     confirmed_order_message: '//*[@id="content-hook_order_confirmation"]//h3[contains(@class, "card-title")]',
     email_sent_message: '//*[@id="content-hook_order_confirmation"]//p',
-    notification_save_adr: '//*[@id="notifications"]//li'
+    notification_save_adr: '//*[@id="notifications"]//li',
+    order_history: '//*[@id="history-link"]/span'
   }
 };

@@ -65,8 +65,9 @@ class CommonClient {
               element.scrollIntoView();
             }, selector)
             .waitForVisibleAndClick(selector);
-        }})
-      .then(()=> this.client.pause(4000));
+        }
+      })
+      .then(() => this.client.pause(4000));
   }
 
   closeBoarding(selector) {
@@ -128,10 +129,22 @@ class CommonClient {
       .waitForExistAndClick(selector, timeout);
   }
 
+  waitForExistAndMiddleClick(selector, pause = 0, timeout = 90000) {
+    return this.client
+      .pause(pause)
+      .waitForExistAndMiddleClick(selector, timeout);
+  }
+
   waitAndSetValue(selector, value, pause = 0, timeout = 90000) {
     return this.client
       .pause(pause)
       .waitAndSetValue(selector, value, timeout);
+  }
+
+  clearElementAndSetValue(selector, value, pause = 0, timeout = 90000) {
+    return this.client
+      .pause(pause)
+      .clearElementAndSetValue(selector, value, timeout);
   }
 
   scrollTo(selector, margin) {
@@ -159,7 +172,9 @@ class CommonClient {
   }
 
   waitAndSelectByVisibleText(selector, value, timeout = 90000) {
-    return this.client.waitAndSelectByVisibleText(selector, value, timeout);
+    return this.client
+
+      .waitAndSelectByVisibleText(selector, value, timeout);
   }
 
   addFile(selector, picture, value = 150) {
@@ -300,8 +315,8 @@ class CommonClient {
       .refresh();
   }
 
-  switchWindow(id) {
-    return this.client.switchWindow(id);
+  switchWindow(id, refresh = true, pause = 0) {
+    return this.client.switchWindow(id, refresh, pause);
   }
 
   isExisting(selector, pause = 0) {
@@ -433,6 +448,18 @@ class CommonClient {
     delete object[pos];
   }
 
+  setAttributeById(selector) {
+    return this.client
+      .execute(function (selector) {
+        document.getElementById(selector).style.display = 'none';
+      }, selector);
+  }
+
+  switchToFrameById(id, pause = 0) {
+    return this.client
+      .pause(pause)
+      .frame(id);
+  }
 }
 
 module.exports = CommonClient;

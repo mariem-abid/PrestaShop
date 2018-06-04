@@ -50,10 +50,22 @@ function initCommands(client) {
       .click(selector);
   });
 
+  client.addCommand('waitForExistAndMiddleClick', function (selector, timeout = 90000) {
+    return client
+      .waitForExist(selector, timeout)
+      .middleClick(selector);
+  });
+
   client.addCommand('waitAndSetValue', function (selector, value, timeout = 90000) {
     return client
       .waitForExist(selector, timeout)
       .setValue(selector, value);
+  });
+
+  client.addCommand('clearElementAndSetValue', function (selector, value, timeout) {
+    return client
+      .clearElement(selector, timeout)
+      .waitAndSetValue(selector, value, timeout);
   });
 
   client.addCommand('scrollTo', function (selector, margin = 150) {
@@ -143,11 +155,17 @@ function initCommands(client) {
       .waitForExistAndClick(selector.logo_home_page);
   });
 
-  client.addCommand('switchWindow', function (id) {
+  client.addCommand('switchWindow', function (id, refresh, pause) {
     return client
       .getTabIds()
       .then(ids => client.switchTab(ids[id]))
-      .refresh();
+      .then(() => {
+        if (refresh) {
+          client.refresh();
+        } else {
+          client.pause(pause);
+        }
+      })
   });
 
   client.addCommand('isOpen', function (selector) {
