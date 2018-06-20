@@ -7,6 +7,8 @@ let path = require('path');
 global.productIdElement = [];
 global.productsTable = [];
 global.productsSortedTable = [];
+global.productsInformations = [];
+global.productPrice = [];
 
 class Product extends CommonClient {
 
@@ -185,6 +187,63 @@ class Product extends CommonClient {
         } else {
           productsTable[i] = name.toLowerCase();
         }
+      });
+  }
+
+  checkSearchProduct(searchBy, min, max) {
+    return this.client
+      .pause(2000)
+      .then(() => {
+        if (searchBy === 'name') {
+          for (let k = 0; k < (productsInformations.length); k++) {
+            expect(productsInformations[k]).to.contain("mug");
+          }
+        }
+        else if (searchBy === 'reference') {
+          for (let k = 0; k < (productsInformations.length); k++) {
+            expect(productsInformations[k]).to.contain("demo_1");
+          }
+        }
+        else if (searchBy === 'category') {
+          for (let k = 0; k < (productsInformations.length); k++) {
+            expect(productsInformations[k]).to.be.equal("art");
+          }
+        }
+        else if (searchBy === 'price') {
+          for (let k = 0; k < (productsInformations.length); k++) {
+            global.productPrice = productsInformations[k].split('€');
+            let price = productPrice[1];
+            expect(price >= min && price <= max).to.be.true;
+          }
+        }
+        else if (searchBy === 'min_quantity') {
+
+          for (let k = 0; k < (productsInformations.length); k++) {
+            expect(productsInformations[k] >= min).to.be.true;
+          }
+        }
+        else if (searchBy === 'quantity' || searchBy === 'id') {
+          for (let k = 0; k < (productsInformations.length); k++) {
+            expect(productsInformations[k] >= min && productsInformations[k] <= max).to.be.true;
+          }
+        }
+        else if (searchBy === 'active_status') {
+          for (let k = 0; k < (productsInformations.length); k++) {
+            expect(productsInformations[k]).to.be.equal("check");
+          }
+        }
+        else {
+          for (let k = 0; k < (productsInformations.length); k++) {
+            expect(productsInformations[k]).to.be.equal("clear");
+          }
+        }
+      });
+  }
+
+  getSearchProducts(selector, i) {
+    return this.client
+      .getText(selector.replace("%ID", i + 1)).then(function (attribut) {
+        productsInformations[i] = attribut.toLowerCase();
       });
   }
 

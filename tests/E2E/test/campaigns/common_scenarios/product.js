@@ -135,7 +135,7 @@ module.exports = {
   sortProduct: function (selector, sortBy) {
     scenario('Check the sort of products by "' + sortBy.toUpperCase() + '"', client => {
       test('should click on "Sort by ASC" icon', () => {
-        let sortSelector = sortBy === 'name' || sortBy === 'reference' ? ProductList.sort_button.replace("%B", sortBy) : sortBy === 'id_product' ? ProductList.sort_by_icon.replace("%B", sortBy).replace("%W", "desc") : ProductList.sort_by_icon.replace("%B", sortBy).replace("%W", "asc");
+        let sortSelector = sortBy === 'name' || sortBy === 'reference' || sortBy === 'name_category' || sortBy === 'price' || sortBy === 'sav_quantity' || sortBy === 'active' ? ProductList.sort_button.replace("%B", sortBy) : sortBy === 'id_product' ? ProductList.sort_by_icon.replace("%B", sortBy).replace("%W", "desc") : ProductList.sort_by_icon.replace("%B", sortBy).replace("%W", "asc");
         for (let j = 0; j < global.productsPageNumber; j++) {
           promise = client.getProductsInformation(selector, j);
         }
@@ -164,6 +164,20 @@ module.exports = {
           .then(() => client.sortTable("DESC", sortBy))
           .then(() => client.checkSortProduct());
       });
+    }, 'product/product');
+  },
+
+  productList: function (AddProductPage, selector, searchBy, min = 0, max = 0) {
+    scenario('Check the list of products', client => {
+      test('should check the list of products', () => {
+        for (let j = 0; j < global.productsPageNumber; j++) {
+          promise = client.getSearchProducts(selector, j);
+        }
+        return promise
+          .then(() => client.checkSearchProduct(searchBy, min, max))
+          .then(() => global.productsInformations = [])
+      });
+      test('should click on "Reset" button', () => client.waitForExistAndClick(AddProductPage.catalog_reset_filter));
     }, 'product/product');
   },
 
