@@ -172,9 +172,7 @@ class CommonClient {
   }
 
   waitAndSelectByVisibleText(selector, value, timeout = 90000) {
-    return this.client
-
-      .waitAndSelectByVisibleText(selector, value, timeout);
+    return this.client.waitAndSelectByVisibleText(selector, value, timeout);
   }
 
   addFile(selector, picture, value = 150) {
