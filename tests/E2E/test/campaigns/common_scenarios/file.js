@@ -146,11 +146,11 @@ module.exports = {
           .then(() => client.goToSubtabMenuPage(Menu.Sell.Catalog.catalog_menu, Menu.Sell.Catalog.files_submenu))
           .then(() => client.isVisible(Files.filter_reset_button))
           .then(() => client.resetButton(Files.filter_reset_button, filtredTable))
-          .then(() => client.getTextInVar(Files.files_number, 'filesNumber'));
+          .then(() => client.getTextInVar(Files.files_number, 'numberFiles'));
       });
       test('should click on "Sort by ASC" icon', () => client.waitForExistAndClick(Files.sort_by_icon.replace("%H", index).replace("%BY", "up")));
       test('should check "Sort file by ' + sortBy + '"', () => {
-        for (let j = 0; j < global.tab['filesNumber']; j++) {
+        for (let j = 0; j < global.tab['numberFiles']; j++) {
           promise = client.getFileInformations(Files.files_table.replace('%R', j + 1).replace('%D', index), j);
         }
         return promise
@@ -158,7 +158,7 @@ module.exports = {
       });
       test('should click on "Sort by DESC" icon', () => client.waitForExistAndClick(Files.sort_by_icon.replace("%H", index).replace("%BY", "down")));
       test('should check "Sort file by ' + sortBy + '"', () => {
-        for (let j = 0; j < global.tab['filesNumber']; j++) {
+        for (let j = 0; j < global.tab['numberFiles']; j++) {
           promise = client.getFileInformations(Files.files_table.replace('%R', j + 1).replace('%D', index), j);
         }
         return promise
@@ -190,14 +190,14 @@ module.exports = {
           .then(() => client.getFilesNumber('table-attachment', 1000));
       });
       test('should check "Filter file by ' + filterBy + '"', () => {
-        if (global.filesNumber > 0) {
-          for (let j = 0; j < global.filesNumber; j++) {
+        if (global.tab['filesNumber'] > 0) {
+          for (let j = 0; j < global.tab['filesNumber']; j++) {
             promise = client.getFileInformations(Files.files_table.replace('%R', j + 1).replace('%D', index), j, false);
           }
           return promise
             .then(() => client.checkFilterFile(searchValue));
         } else {
-          return Promise.reject(new Error('No Records Found')).then(expect(global.filesNumber).to.be.at.most(0));
+          return Promise.reject(new Error('No Records Found')).then(expect(global.tab['filesNumber']).to.be.at.most(0));
         }
       });
     }, 'file');

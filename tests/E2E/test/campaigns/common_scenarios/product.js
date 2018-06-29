@@ -150,7 +150,7 @@ module.exports = {
     scenario('Check the sort of products by "' + sortBy.toUpperCase() + '"', client => {
       test('should click on "Sort by ASC" icon', () => {
         let sortSelector = sortBy === 'name' || sortBy === 'reference' ? ProductList.sort_button.replace("%B", sortBy) : sortBy === 'id_product' ? ProductList.sort_by_icon.replace("%B", sortBy).replace("%W", "desc") : ProductList.sort_by_icon.replace("%B", sortBy).replace("%W", "asc");
-        for (let j = 0; j < global.productsPageNumber; j++) {
+        for (let j = 0; j < global.tab['productsNumber']; j++) {
           promise = client.getProductsInformation(selector, j);
         }
         return promise
@@ -158,7 +158,7 @@ module.exports = {
           .then(() => client.waitForExistAndClick(sortSelector));
       });
       test('should check that the products is well sorted by ASC', () => {
-        for (let j = 0; j < global.productsPageNumber; j++) {
+        for (let j = 0; j < global.tab['productsNumber']; j++) {
           promise = client.getProductsInformation(selector, j, true);
         }
         return promise
@@ -171,7 +171,7 @@ module.exports = {
           .then(() => client.waitForExistAndClick(ProductList.sort_by_icon.replace("%B", sortBy).replace("%W", "asc")));
       });
       test('should check that the products is well sorted by DESC', () => {
-        for (let j = 0; j < global.productsPageNumber; j++) {
+        for (let j = 0; j < global.tab['productsNumber']; j++) {
           promise = client.getProductsInformation(selector, j, true);
         }
         return promise
@@ -202,7 +202,7 @@ module.exports = {
       test('should check that the number of products is less or equal to "' + itemPerPage + '"', () => {
         return promise
           .then(() => client.getProductPageNumber('product_catalog_list'))
-          .then(() => expect(global.productsPageNumber).to.be.at.most(itemPerPage));
+          .then(() => expect(global.tab['productsNumber']).to.be.at.most(itemPerPage));
       });
       if (paginateBetweenPages) {
         /** @todo to be removed when the PR that creates a global variable to determine if we are in the debug mode or not will be merged **/

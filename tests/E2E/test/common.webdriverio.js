@@ -143,6 +143,12 @@ function initCommands(client) {
       .waitForExistAndClick(selector.logo_home_page);
   });
 
+  client.addCommand('clearElementAndSetValue', function (selector, value, timeout) {
+    return client
+      .clearElement(selector, timeout)
+      .waitAndSetValue(selector, value, timeout);
+  });
+
   client.addCommand('switchWindow', function (id) {
     return client
       .getTabIds()
