@@ -46,7 +46,7 @@ module.exports = {
           test('should set the "Last name" input', () => client.waitAndSetValue(accountPage.lastname_input, data.customer.lastname));
           if (authentication === "create_account") {
             test('should set the "Email" input', () => client.waitAndSetValue(accountPage.new_email_input, data.customer.email.replace("%ID", date_time)));
-            test('should set the "Password" input', () => client.waitAndSetValue(accountPage.new_password_input, data.customer.password));
+            test('should set the "Password" input', () => client.waitAndSetValue(accountPage.password_account_input, data.customer.password));
           } else {
             test('should set the "Email" input', () => client.waitAndSetValue(accountPage.new_email_input, data.customer.email.replace("%ID", '_guest' + date_time)));
           }
