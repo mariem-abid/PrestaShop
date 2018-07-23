@@ -11,6 +11,7 @@ let options = {
     browserName: 'chrome',
   },
   port: 4444,
+  host:'172.16.0.118',
   deprecationWarnings: false
 };
 if (typeof global.selenium_url !== 'undefined') {

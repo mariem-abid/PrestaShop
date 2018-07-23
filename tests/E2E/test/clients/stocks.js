@@ -1,6 +1,10 @@
+const {Stock} = require('../selectors/BO/catalogpage/stocksubmenu/stock');
 var CommonClient = require('./common_client');
 let promise = Promise.resolve();
 global.tab = [];
+global.physicalQuantity = [];
+global.availableQuantity = [];
+global.reservedQuantity = [];
 
 class ModifyQuantity extends CommonClient {
 
@@ -53,6 +57,40 @@ class ModifyQuantity extends CommonClient {
       return promise.then(() => client.checkMovement(Movement, 2, "15", "+", "Employee Edition"));
     }
   }
+
+  getNumberOfProducts(selector) {
+    return this.client
+      .execute(function (selector) {
+        return document.getElementsByClassName(selector)[0].getElementsByTagName('tbody')[0].children.length;
+      }, selector)
+      .then((count) => {
+        global.numbersOfProducts = count.value;
+        console.log(global.numbersOfProducts);
+      });
+  }
+
+  getPhysicalQuantities(selector, i, pause = 0) {
+    return this.client
+      .pause(pause)
+      .getText(selector.replace("%O", i).replace("%P", 5)).then((quantity) => {
+        physicalQuantity[i] = quantity;
+      });
+  }
+
+  getAvailableQuantities(selector, i) {
+    return this.client
+      .getText(selector.replace("%O", i).replace("%P", 7)).then((quantity) => {
+        availableQuantity[i] = quantity;
+      });
+  }
+
+  getReservedQuantities(selector, i) {
+    return this.client
+      .getText(selector.replace("%O", i).replace("%P", 6)).then((quantity) => {
+        reservedQuantity[i] = quantity;
+      });
+  }
+
 }
 
 module.exports = ModifyQuantity;
