@@ -32,25 +32,25 @@ scenario('Create "Feature"', () => {
   commonFeature.createFeature(featureData);
   commonProduct.createProduct(AddProductPage, productData);
 
-  /* Check the created feature */
+  /!* Check the created feature *!/
   scenario('Login in the Front Office', client => {
     test('should login successfully in the Front Office', () => client.signInFO(AccessPageFO));
   }, 'attribute_and_feature');
   commonFeature.checkFeatureInFO(productData.name, featureData);
 
-  /* Update the created feature */
+  /!* Update the created feature *!/
   scenario('Go back to the Back Office', client => {
     test('should go back to the Back Office', () => client.accessToBO(AccessPageBO));
   }, 'attribute_and_feature');
   commonFeature.updateFeature(featureData);
 
-  /* Check the updated feature */
+  /!* Check the updated feature *!/
   scenario('Go back to the Front Office', client => {
     test('should go back to the Front Office', () => client.accessToFO(AccessPageFO));
   }, 'attribute_and_feature');
   commonFeature.checkFeatureInFO(productData.name, featureData);
 
-  /* Delete feature */
+  /!* Delete feature *!/
   scenario('Go back to the Back Office', client => {
     test('should go back to the Back Office', () => client.accessToBO(AccessPageBO));
   }, 'attribute_and_feature');
@@ -59,7 +59,7 @@ scenario('Create "Feature"', () => {
     test('should logout successfully from the Back Office', () => client.signOutBO());
   }, 'attribute_and_feature');
 
-  /* Check the deleted feature */
+  /!* Check the deleted feature *!/
   scenario('Go back to the Front Office', client => {
     test('should go back to the Front Office', () => client.accessToFO(AccessPageFO));
   }, 'attribute_and_feature');

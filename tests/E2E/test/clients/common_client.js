@@ -109,7 +109,8 @@ class CommonClient {
         if (isVisible) {
           this.client.waitForVisibleAndClick(languageFO.language_option.replace('%LANG', language));
         }
-      });
+      })
+      .then(() => this.client.pause(3000));
   }
 
   selectLanguage(selector, option, language, id) {

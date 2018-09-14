@@ -1,5 +1,6 @@
 module.exports = {
   ModulePage: {
+    modules_tab: '//*[@id="subtab-AdminModulesManage"]',
     upload_button: '//*[@id="page-header-desc-configuration-add_module"]',
     zip_file_input: '//*[@id="importDropzone"]/input',
     installed_message: '//*[@id="importDropzone"]/div[3]/p[1]',
@@ -49,7 +50,7 @@ module.exports = {
     enable_module: '//form[contains(@action, "action/enable/%moduleTechName")]//button[@data-confirm_modal="module-modal-confirm-%moduleTechName-enable"]',
     reset_module: '//form[contains(@action, "action/reset/%moduleTechName")]//button[@data-confirm_modal="module-modal-confirm-%moduleTechName-reset"]',
     reset_button_modal: '//*[@id="module-modal-confirm-%moduleTechName-reset"]//a[contains(@class, "module_action_modal_reset")]',
-    backdrop_modale:'//div[contains(@class, "fade show")]',
+    backdrop_modale: '//div[contains(@class, "fade show")]',
     installed_module_div: '//div[@data-tech-name="%moduleTechName"]',
     //List of modules after search
     list_module: '//*[@id="modules-list-container-all"]/div[%I]',
@@ -58,7 +59,7 @@ module.exports = {
     //List of modules in notifications tab
     configure_module: '//*[@id="modules-list-container-notification"]//button[@data-confirm_modal="module-modal-confirm-%moduleTechName-configure"]',
     modules_number_to_configure: '//*[@id="module-short-list-configure"]/span[1]',
-    notification_number: '//*[@id="head_tabs"]//span[@class="notification-counter"]',
+    notification_number: '//*[@id="subtab-AdminModulesNotifications"]//span[@class="notification-counter"]',
     selection_tab: '//*[@id="head_tabs"]/a[1]',
     ModuleBankTransferPage: {
       account_owner_input: '//*[@id="BANK_WIRE_OWNER"]',
@@ -69,15 +70,15 @@ module.exports = {
     MainMenuPage: {
       available_item_list: '//*[@id="availableItems"]//option[@value="CAT%ID"]',
       add_item_button: '//*[@id="addItem"]',
-      selected_item_list : '//*[@id="items"]//option[@value="CAT%ID"]',
+      selected_item_list: '//*[@id="items"]//option[@value="CAT%ID"]',
       save_button: '//*[@id="module_form_submit_btn"]'
     },
     ReadMoreModal: {
       read_more_link: '//*[@id="modules-list-container-all"]/div[contains(@data-tech-name, "%moduleTechName")]//a[text()="Read more"]',
       overview_content: '//*[@id="overview-%moduleTechName"]/p',
-      additional_content: '//*[@id="additional-%moduleTechName"]//li',
-      features_content: '//*[@id="features-%moduleTechName"]//li',
-      changelog_content: '//*[@id="changelog-%moduleTechName"]//li',
+      additional_content: '//*[@id="additional-%moduleTechName"]',
+      features_content: '//*[@id="features-%moduleTechName"]',
+      changelog_content: '//*[@id="changelog-%moduleTechName"]',
       module_readmore_tabs: '//*[@id="modules-list-container-all"]/div[contains(@data-tech-name, "%moduleTechName")]//a[contains(text(), "%NAME")]',
       close_modal_button: '//*[@id="module-modal-read-more-%moduleTechName"]//button[@class="close"]'
     },

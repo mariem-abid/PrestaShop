@@ -50,18 +50,18 @@ let productData = [{
 }];
 
 let categoryData = {
-    name: 'category_name',
-    description: 'description of category',
-    picture: 'category_image.png',
-    thumb_picture: 'category_miniature.png',
-    meta_title: 'meta title category',
-    meta_description: 'meta description category',
-    meta_keywords: {
-      1: 'first key',
-      2: 'second key'
-    },
-    friendly_url: 'prestashop_Friendly_url'
-  };
+  name: 'category_name',
+  description: 'description of category',
+  picture: 'category_image.png',
+  thumb_picture: 'category_miniature.png',
+  meta_title: 'meta title category',
+  meta_description: 'meta description category',
+  meta_keywords: {
+    1: 'first key',
+    2: 'second key'
+  },
+  friendly_url: 'prestashop_Friendly_url'
+};
 
 /**
  * This scenario is based on the bug described in this ticket
@@ -91,7 +91,7 @@ scenario('Create, edit, check and delete "Category" with the "linkanddisable" mo
   scenario('Logout from the Back Office', client => {
     test('should logout successfully from the Back Office', () => client.signOutBO());
   }, 'category');
-}, 'category', true);
+}, 'category');
 
 scenario('Create, edit, check and delete "Category" with the "link" mode', () => {
   scenario('Login in the Back Office', client => {
