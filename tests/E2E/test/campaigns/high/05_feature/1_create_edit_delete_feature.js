@@ -67,4 +67,4 @@ scenario('Create "Feature"', () => {
   scenario('Logout from the Front Office', client => {
     test('should logout successfully from the Front Office', () => client.signOutFO(AccessPageFO));
   }, 'attribute_and_feature');
-}, 'attribute_and_feature', true);
+}, 'attribute_and_feature');

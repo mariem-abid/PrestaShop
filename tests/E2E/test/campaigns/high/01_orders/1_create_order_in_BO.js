@@ -91,5 +91,5 @@ scenario('Create order in the Back Office', () => {
     }, 'order');
 
   }, 'order');
-}, 'order', true);
+}, 'order');
 

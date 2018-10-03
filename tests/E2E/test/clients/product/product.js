@@ -132,7 +132,7 @@ class Product extends CommonClient {
       .waitAndSetValue(addProductPage.select_feature_created, name)
       .waitForExistAndClick(addProductPage.result_feature_select.replace('%ID', 0))
       .pause(2000)
-      .selectByVisibleText(addProductPage.feature_value_select, value);
+      .selectByVisibleText(addProductPage.feature_value_select.replace('%ID', 0).replace('%V', 'not(@disabled)'), value);
   }
 
   clickNextOrPrevious(selector) {
@@ -250,7 +250,7 @@ class Product extends CommonClient {
   getProductName(selector, i) {
     return this.client
       .getText(selector).then(function (name) {
-        global.productInfo.push({'name':name, 'status':'false'})
+        global.productInfo.push({'name': name, 'status': 'false'})
       });
   }
 
@@ -268,8 +268,8 @@ class Product extends CommonClient {
   }
 
   checkFeatureValue(predefinedValueSelector, customValueSelector, featureData) {
-    if(global.isVisible) {
-      if(featureData.predefined_value !== '') {
+    if (global.isVisible) {
+      if (featureData.predefined_value !== '') {
         return this.client
           .isSelected(predefinedValueSelector)
           .then((value) => expect(value).to.be.equal(true));
