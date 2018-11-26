@@ -48,6 +48,7 @@ module.exports = {
       }
       test('should click on "Save" button', () => client.waitForExistAndClick(Localization.languages.save_button));
       test('should verify the appearance of the green validation', () => client.checkTextValue(InternationalPage.success_panel, '×\nSuccessful update.'));
+      test('should click on "Reset" button', () => client.waitForExistAndClick(Localization.languages.reset_button));
     }, 'common_client');
   },
   checkLanguageBO: function (languageData) {

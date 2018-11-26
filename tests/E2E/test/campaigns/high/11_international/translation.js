@@ -26,7 +26,12 @@ scenario('Edit a translation', () => {
     });
     test('should click on "Theme" button', () => client.waitForVisibleAndClick(Translations.theme_button));
     test('should click on "Action" button', () => client.waitForVisibleAndClick(Translations.action_button));
-    test('should change "Sign Out" translation from "Sign Out" to "Sign Out English"', () => client.waitAndSetValue(Translations.Sign_out_textarea_button, "Sign out English"));
+    test('should search for "Sign out" translation', () => {
+      return promise
+        .then(() => client.waitAndSetValue(Translations.search_input, "Sign out"))
+        .then(() => client.waitForExistAndClick(Translations.search_button));
+    });
+    test('should change "Sign Out" translation from "Sign Out" to "Sign Out English"', () => client.waitAndSetValue(Translations.Sign_out_textarea_button, "Sign out English", 1000));
   }, 'common_client');
   scenario('Save change', client => {
     test('should click on "Save" button ', () => client.scrollWaitForExistAndClick(Translations.save_button));

@@ -94,7 +94,21 @@ module.exports = {
           });
           test('should click on "Generate" button', () => client.scrollWaitForExistAndClick(AddProductPage.variations_generate));
           test('should verify the appearance of the green validation', () => client.checkTextValue(AddProductPage.validation_msg, 'Settings updated.'));
-          test('should get the combination data', () => client.getCombinationData(1));
+          // should refresh the page because of the issue here: #9826
+          test('should refresh the page if "Debug" mode is active because of the issue here  "#9826" ', () => {
+            return promise
+              .then(() => client.isVisible(AddProductPage.var_selected))
+              .then(() => {
+                if (global.ps_mode_dev && !isVisible) {
+                  client.refresh();
+                } else {
+                  client.pause(0);
+                }
+              })
+              .then(() => client.getCombinationData(1, 5000));
+          });
+
+
           test('should select all the generated variations', () => client.waitForVisibleAndClick(AddProductPage.var_selected));
           test('should set the "Variations quantity" input', () => {
             return promise

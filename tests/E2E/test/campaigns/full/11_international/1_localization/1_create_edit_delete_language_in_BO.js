@@ -85,7 +85,7 @@ scenario('Create, edit, delete and check "Languages" in the Back Office', () => 
     scenario('Go back to the Back Office', client => {
       test('should go back to the Back Office', () => client.accessToBO(AccessPageBO));
     }, 'common_client');
-    common_scenarios.editLanguage(languageData[0].name, languageEditedData[1]);
+    common_scenarios.editLanguage(languageEditedData[0].name, languageEditedData[1]);
     scenario('Go to the Front Office', client => {
       test('should go to the Front Office', () => client.accessToFO(AccessPageFO));
     }, 'common_client');
