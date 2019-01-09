@@ -14,16 +14,30 @@ let fileData = {
     file: 'prestashop_developer_guide.pdf'
   };
 
-let productData = {
+let productData = [{
   name: 'AttPr',
   quantity: "50",
   price: '5',
   image_name: 'image_test.jpg',
   reference: 'Attached product with file',
   options: {
-    filename: 'Ps Picture'
+    filename: [
+      'Ps Picture',
+    ]
   }
-};
+}, {
+  name: 'AttPr2',
+  quantity: "50",
+  price: '5',
+  image_name: 'image_test.jpg',
+  reference: 'Attached product with file',
+  options: {
+    filename: [
+      'Ps Picture',
+      'PS Developer Guide'
+    ]
+  }
+}];
 
 scenario('Check the created file in the Front Office', () => {
   scenario('Open the browser and connect to the Back Office', client => {
@@ -32,13 +46,17 @@ scenario('Check the created file in the Front Office', () => {
   }, 'common_client');
   commonFileScenarios.createFile(fileData.filename, fileData.description, fileData.file);
   commonFileScenarios.checkFile(fileData.filename, fileData.description);
-  commonProductScenarios.createProduct(AddProductPage, productData);
-  commonFileScenarios.checkFileFO(productData.name, fileData.filename, 8000);
+  commonProductScenarios.createProduct(AddProductPage, productData[0]);
+  commonFileScenarios.checkFileFO(productData[0], fileData, true, false, 1);
   commonFileScenarios.editFile(fileData.filename, fileEditedData.filename, fileEditedData.description, fileEditedData.file);
-  commonFileScenarios.checkFileFO(productData.name, fileEditedData.filename);
+  commonFileScenarios.checkFileFO(productData[0], fileEditedData, false, true, 1);
   commonFileScenarios.deleteFile(fileEditedData.filename);
-  scenario('Logout from the Back Office', client => {
-    test('should logout successfully from the Back Office', () => client.signOutBO());
-  }, 'common_client');
+  commonFileScenarios.checkFileFO(productData[0], fileEditedData, false, false, 1);
+  commonFileScenarios.createFile(fileData.filename, fileData.description, fileData.file);
+  commonFileScenarios.createFile(fileEditedData.filename, fileEditedData.description, fileEditedData.file);
+  commonProductScenarios.createProduct(AddProductPage, productData[1]);
+  commonFileScenarios.checkFileFO(productData[1], fileData, true, false, 2);
+  commonFileScenarios.deleteFileWithBulkAction(fileEditedData.filename);
+  commonFileScenarios.checkFileFO(productData[1], fileData, false, false, 2);
 }, 'common_client', true);
 

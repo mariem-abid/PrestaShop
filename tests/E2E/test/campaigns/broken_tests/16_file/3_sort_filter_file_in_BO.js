@@ -1,4 +1,5 @@
 const {AccessPageBO} = require('../../../selectors/BO/access_page');
+const {Files} = require('../../../selectors/BO/catalogpage/files');
 const {AddProductPage} = require('../../../selectors/BO/add_product_page');
 const commonProductScenarios = require('../../common_scenarios/product');
 const commonFileScenarios = require('../../common_scenarios/file');
@@ -24,7 +25,7 @@ let productData = [{
   image_name: 'image_test.jpg',
   reference: 'Attached product with file',
   options: {
-    filename: 'PS Developer Guide'
+    filename: ['PS Developer Guide']
   }
 }, {
   name: 'PrB',
@@ -33,7 +34,7 @@ let productData = [{
   image_name: 'image_test.jpg',
   reference: 'Attached product with file',
   options: {
-    filename: 'Ps Category'
+    filename: ['Ps Category']
   }
 }];
 
@@ -49,14 +50,14 @@ scenario('Create, sort, filter, delete and check "Files" in the Back Office', ()
   for (let m = 0; m < productData.length; m++) {
     commonProductScenarios.createProduct(AddProductPage, productData[m]);
   }
-  commonFileScenarios.sortFile('id', 2);
-  commonFileScenarios.sortFile('name', 3);
-  commonFileScenarios.sortFile('size', 5);
-  commonFileScenarios.sortFile('associated', 6);
-  commonFileScenarios.filterFile('1', 'associated', 6, true);
+  commonFileScenarios.sortFile(Files.files_name, 'name', 3);
+  commonFileScenarios.sortFile(Files.files_id, 'id', 2, true);
+  commonFileScenarios.sortFile(Files.files_size, 'size', 5);
+  commonFileScenarios.sortFile(Files.files_associated, 'associated', 6);
   commonFileScenarios.filterFile('Ps Category', 'name', 3, true);
-  commonFileScenarios.sortFile('associated', 6, true);
+  commonFileScenarios.sortFile(Files.files_id, 'id', 2, false, true);
   commonFileScenarios.filterFile('0', 'associated', 6);
+  commonFileScenarios.filterFile('6', 'size', 5);
   for (let k = 0; k < fileData.length; k++) {
     commonFileScenarios.deleteFile(fileData[k].filename);
   }
