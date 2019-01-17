@@ -61,7 +61,12 @@ module.exports = {
     modal_content: '//*[@id="blockcart-modal"]//div[@class="modal-content"]',
     cart_page: '//*[@id="cart"]',
     cart_body: '(//*[@id="main"]//div[contains(@class, "body")])[1]',
-    country_list: '//*[@id="delivery-address"]//select[@name="id_country"]'
+    country_list: '//*[@id="delivery-address"]//select[@name="id_country"]',
+    products_number: '//*[@id="cart-subtotal-products"]/span[contains(@class,"subtotal")]',
+    shipping_value: '//*[@id="cart-subtotal-shipping"]/span[@class="value"]',
+    product_total_price: '//*[@id="main"]//li[%NUMBER]//span[@class="product-price"]/strong',
+    product_name: '(//*[@id="main"]//div[@class="product-line-info"]/a)[%NUMBER]',
+    discount_value_block_promo: '//*[@id="main"]//div[@class="block-promo"]//ul[1]/li/div'
   },
   CustomerAccount: {
     order_history_button: '//*[@id="history-link"]',
