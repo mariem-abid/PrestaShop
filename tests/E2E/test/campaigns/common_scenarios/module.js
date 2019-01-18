@@ -173,7 +173,7 @@ module.exports = {
   installUninstallMboModule: async function (client, ModulePage, AddProductPage, moduleTechName, action) {
     if (action === 'Uninstall') {
       test('should go to "Module Catalog" page', () => client.goToSubtabMenuPage(Menu.Improve.Modules.modules_menu, Menu.Improve.Modules.modules_manager_submenu));
-      test('should go to "Module Manager" page', () => client.waitForExistAndClick( Menu.Improve.Modules.modules_manager_submenu));
+      test('should go to "Module Manager" page', () => client.waitForExistAndClick(Menu.Improve.Modules.modules_manager_submenu));
       test('should click on "Installed Modules" tab', () => client.waitForExistAndClick(Menu.Improve.Modules.installed_modules_tabs));
       test('should search for ' + moduleTechName + ' module in the installed module tab', () => client.waitAndSetValue(ModulePage.module_selection_input, moduleTechName, 2000));
       test('should click on "Search" button', () => client.waitForExistAndClick(ModulePage.modules_search_button));
@@ -212,4 +212,20 @@ module.exports = {
       });
     }
   },
+  checkAmazonMarketPlace: async function (client, ModulePage, id) {
+    test('should go to "Modules Catalog" page', () => client.goToSubtabMenuPage(Menu.Improve.Modules.modules_menu, Menu.Improve.Modules.modules_catalog_submenu));
+    test('should search for the module "Amazon Market Place"', () => {
+      return promise
+        .then(() => client.waitAndSetValue(ModulePage.module_selection_input, 'amazon', 2000))
+        .then(() => client.waitForExistAndClick(ModulePage.selection_search_button));
+    });
+    test('should click on "Discover" button', () => client.waitForExistAndClick(ModulePage.discover_amazon_module_button));
+    test('should verify it opens the addons Amazon market place product page in a new tab', () => {
+      return promise
+        .then(() => client.switchWindow(id))
+        .then(() => client.refresh()) /**Adding refreshing page because sometimes is not well opened we have to refresh it before */
+        .then(() => client.checkTextValue(ModulePage.module_name, "Amazon Market Place Module", 'contain'))
+        .then(() => client.switchWindow(0));
+    });
+  }
 };
