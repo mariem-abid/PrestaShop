@@ -94,5 +94,6 @@ module.exports = {
     },
     see_more_link: '//*[@id="main-div"]//button[contains(@class,"see-more")]',
     configure_link: '(//*[@id="main-div"]//div[@data-tech-name="%moduleTechName"]//a[contains(@href,"/action/configure")])',
+    upgrade_module_button:'//*[@id="modules-list-container-update"]//button[contains(@data-confirm_modal,"%moduleTechName-upgrade")]'
   }
 };

@@ -226,4 +226,36 @@ module.exports = {
       test('should check if the module "Payments by check" is displayed', () => client.isVisible(ModulePage.installed_module_div.replace('%moduleTechName', 'ps_checkpayment'), 2000));
     }
   },
+  configureBankTransferModule: function (client,ModulePage) {
+    test('should go to "Modules" page', () => client.goToSubtabMenuPage(Menu.Improve.Modules.modules_menu, Menu.Improve.Modules.modules_manager_submenu));
+    test('should click on "Alerts" tab', () => {
+      return promise
+        .then(() => client.pause(4000))
+        .then(() => client.getTextInVar(ModulePage.notification_number, 'notification'))
+        .then(() => client.pause(4000))
+        .then(() => client.waitForExistAndClick(Menu.Improve.Modules.alerts_subTab))
+    });
+    test('should click on "Configure" button', () => client.waitForExistAndClick(ModulePage.configure_link.replace('%moduleTechName', 'ps_wirepayment'),2000));
+    test('should set the "Account owner" input', () => client.waitAndSetValue(ModulePage.ModuleBankTransferPage.account_owner_input, 'Demo'));
+    test('should set the "Account details" textarea', () => client.waitAndSetValue(ModulePage.ModuleBankTransferPage.account_details_textarea, 'Check notification module'));
+    test('should set the "Bank address" textarea', () => client.waitAndSetValue(ModulePage.ModuleBankTransferPage.bank_address_textarea, 'Boulvard street n°9 - 70501'));
+    test('should click on "Save" button', () => client.waitForExistAndClick(ModulePage.ModuleBankTransferPage.save_button));
+  },
+  checkConfigurationModule: function (client,ModulePage,moduleTechName) {
+    test('should go to "Modules" page', () => client.goToSubtabMenuPage(Menu.Improve.Modules.modules_menu, Menu.Improve.Modules.modules_manager_submenu));
+    test('should click on "Alerts" tab', () => client.waitForExistAndClick(Menu.Improve.Modules.alerts_subTab));
+    test('should check that the "Alerts number" is decremented with 1', () => client.checkTextValue(ModulePage.notification_number, (tab['notification'] - 1 ).toString(),'equal',1000));
+    test('should check that the configured module is not visible in the "Alerts" tab', () => client.checkIsNotVisible(ModulePage.configure_module.replace('%moduleTechName', moduleTechName)));
+  },
+  upgradeModule: function (client,ModulePage,moduleTechName) {
+    test('should go to "Modules" page', () => client.goToSubtabMenuPage(Menu.Improve.Modules.modules_menu, Menu.Improve.Modules.modules_manager_submenu));
+    test('should click on "Updates" tab', () => {
+      return promise
+        .then(() => client.pause(4000))
+        .then(() => client.getTextInVar(ModulePage.notification_number, 'notificationUpdate'))
+        .then(() => client.pause(4000))
+        .then(() => client.waitForExistAndClick(Menu.Improve.Modules.updates_subTab))
+    });
+    test('should click on "Upgrade" button', () => client.waitForExistAndClick(ModulePage.upgrade_module_button.replace('%moduleTechName', 'ps_facetedsearch'),2000));
+  },
 };
