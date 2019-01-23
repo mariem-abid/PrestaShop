@@ -28,12 +28,23 @@ module.exports = {
     }
   },
 
-  checkMovementHistory: function (client, Menu, Movement, movementIndex, itemNumber, option, type, reference= "") {
+  checkMovementHistory: function (client, Menu, Movement, movementIndex, itemNumber, option, type, reference = "", dateAndTime = "", employee = "", productName = "") {
     test('should go to "Movements" tab', () => {
       return promise
         .then(() => client.goToStockMovements(Menu, Movement))
         .then(() => client.pause(5000));
     });
-    test('should check movement history', () => client.checkMovement(Movement, movementIndex, itemNumber, option, type, reference));
+    test('should check movement history', () => client.checkMovement(Movement, movementIndex, itemNumber, option, type, reference, dateAndTime, employee, productName));
+  },
+
+  checkStockProduct: function (client, productName, Menu, Stock,availableQuantity,reservedQuantity,physicalQuantity) {
+    scenario('Check the stock for the "' + productName + '"', client => {
+      test('should go to "Stocks" page', () => client.goToSubtabMenuPage(Menu.Sell.Catalog.catalog_menu, Menu.Sell.Catalog.stocks_submenu));
+      test('should set the "Search products" input', () => client.waitAndSetValue(Stock.search_input, productName));
+      test('should click on "Search" button', () => client.waitForExistAndClick(Stock.search_button));
+      test('should check that the "Available quantity"', () => client.checkTextValue(Stock.available_column.replace("%ID", 1), availableQuantity));
+      test('should check that the "Reserved quantity"', () => client.checkTextValue(Stock.employee_column.replace("%O", 1), reservedQuantity));
+      test('should check that the "Physical quantity"', () => client.checkTextValue(Stock.physical_column.replace("%ID", 1), physicalQuantity));
+    }, 'common_client');
   }
 };

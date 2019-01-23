@@ -6,7 +6,9 @@ module.exports = {
     type_value: '//*[@id="app"]//tr[%P]/td[3]',
     reference_value: '//*[@id="app"]//tr[%P]/td[2]',
     time_movement: '//*[@id="app"]//tr[%P]/td[5]',
-    sort_data_time_icon: '//*[@id="app"]//table//th[5]//div[contains(@data-sort-direction,"asc")]'
+    sort_data_time_icon: '//*[@id="app"]//table//th[5]//div[contains(@data-sort-direction,"asc")]',
+    employee_value: '//*[@id="app"]//tr[%P]/td[6]',
+    product_value: '//*[@id="app"]//tr[%P]/td[1]//p'
   }
 };
 

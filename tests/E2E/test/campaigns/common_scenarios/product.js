@@ -139,6 +139,18 @@ module.exports = {
         }
       }
 
+      if (productData.hasOwnProperty('quantities')) {
+        scenario('Edit availibility preferences', client => {
+          test('should click on "Quantities"', () => client.scrollWaitForExistAndClick(AddProductPage.variations_tab, 50));
+          if (productData.quantities.stock === 'deny') {
+            test('should check "Deny orders"', () => client.waitForExistAndClick(AddProductPage.combination_availability_preferences.replace("%NUMBER", 0)));
+          }
+          else {
+            test('should check "Allow orders"', () => client.waitForExistAndClick(AddProductPage.combination_availability_preferences.replace("%NUMBER", 1)));
+          }
+        }, 'product/product');
+      }
+
       if (productData.hasOwnProperty('pricing')) {
         scenario('Edit product pricing', client => {
           test('should click on "Pricing"', () => client.scrollWaitForExistAndClick(AddProductPage.product_pricing_tab, 50));
@@ -198,7 +210,11 @@ module.exports = {
             .then(() => client.checkTextValue(AddProductPage.validation_msg, 'Settings updated.', 3000));
         });
         test('should click on "Save" button', () => client.waitForExistAndClick(AddProductPage.save_product_button, 7000));
-        test('should verify the appearance of the green validation', () => client.checkTextValue(AddProductPage.validation_msg, 'Settings updated.', 'equal', 2000));
+        test('should check and close the green validation', async () => {
+          return promise
+            .then(() => client.checkTextValue(AddProductPage.validation_msg, 'Settings updated.', 'equal', 2000))
+            .then(() => client.waitForExistAndClick(AddProductPage.close_validation_button, 1000));
+        });
       }, 'product/product');
 
     }, 'product/product');
@@ -625,6 +641,12 @@ module.exports = {
     await client.waitForExistAndClick(ProductList.filter_by_category_button);
     await client.waitForExistAndClick(ProductList.unselect_filter_link);
   },
-
+  checkProductQuantity(Menu,AddProductPage, productName,quantity) {
+    scenario('Check the quantity of the "' + productName + '"', client => {
+      test('should go to "Products" page', () => client.goToSubtabMenuPage(Menu.Sell.Catalog.catalog_menu, Menu.Sell.Catalog.products_submenu));
+      test('should search for product by name', () => client.searchProductByName(productName));
+      test('should check the existence of product quantity', () => client.checkTextValue(AddProductPage.catalog_product_quantity, quantity));
+    }, 'product/check_product');
+  },
 
 };
