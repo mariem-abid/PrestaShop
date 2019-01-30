@@ -56,5 +56,8 @@ module.exports = {
     account: '//*[@id="_desktop_user_info"]/div[@class="user-info"]/a[@class="account"]/span',
     selected_language_by_isocode_option: '//*[@id="_desktop_language_selector"]//select/option[@selected="selected" and @data-iso-code="%ID"]',
     language_bloc: '//*[@id="_desktop_language_selector"]',
+    customer_name: '//*[@id="_desktop_user_info"]//span',
+    currency_select: '//*[@id="_desktop_currency_selector"]//button[@aria-label="Currency dropdown"]',
+    curreny_option: '//*[@id="_desktop_currency_selector"]//li/a[@title="%S"]'
   }
 };

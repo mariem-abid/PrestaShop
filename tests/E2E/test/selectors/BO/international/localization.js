@@ -82,6 +82,15 @@ module.exports = {
       ip_address_no_label: '//label[@for="form_geolocation_by_id_address_geolocation_enabled_0"]',
       save_geolocation_ip_address_button: '(//*[@id="main-div"]//button[contains(text(),"Save")])[1]',
       alert_panel: '//*[@id="main-div"]//div[contains(@class, "%B") and @role="alert"]/div[@class="alert-text"]',
+    },
+    Currency: {
+      add_new_currency_button: '//*[@id="page-header-desc-currency-new_currency"]',
+      status_button: '//*[@id="currencyStatus"]',
+      save_button: '//*[@id="currency_form_submit_btn"]',
+      iso_code_filter_input: '//*[@id="table-currency"]//input[@name="currencyFilter_iso_code"]',
+      search_button: '//*[@id="submitFilterButtoncurrency"]',
+      dropdown_toggle_button: '//*[@id="table-currency"]//button[contains(@class, "dropdown-toggle")]',
+      delete_button: '//*[@id="table-currency"]//a[@title="Delete"]'
     }
   }
 };

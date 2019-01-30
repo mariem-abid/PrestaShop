@@ -72,7 +72,7 @@ scenario('Create a pack of products in the Back Office', client => {
     test('should click on "Deny orders"', () => client.waitForExistAndClick(AddProductPage.pack_availability_preferences));
     test('should set the "label when in stock"', () => client.waitAndSetValue(AddProductPage.pack_label_in_stock, data.common.qty_msg_stock));
     test('should set the "Label when out of stock (and back order allowed)"', () => client.availability());
-    test('should set the "Availability date"', () => client.waitAndSetValue(AddProductPage.pack_availability_date, data.common.qty_date));
+    test('should set the "Availability date"', () => client.waitAndSetValue(AddProductPage.availability_date_input, data.common.qty_date));
   }, 'product/product');
 
   scenario('Edit product shipping', client => {

@@ -1,7 +1,7 @@
 module.exports = {
   ProductSettings:{
     menu:'//*[@id="subtab-AdminPPreferences"]/a',
-    disableOrderOutOfStock_button:'//label[contains(@for, "form_stock_allow_ordering_oos_0")]',
+    allowOrderOutOfStock_button:'//label[contains(@for, "form_stock_allow_ordering_oos_%I")]',
     stockManagement_button:'//*[@id="form_stock_pack_stock_management"]',
     save_button:'(//button[text()="Save"])[%POS]',
     Pagination: {

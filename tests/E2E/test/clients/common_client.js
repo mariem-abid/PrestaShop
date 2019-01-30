@@ -273,6 +273,18 @@ class CommonClient {
           .waitForExist(selector, 90000)
           .then(() => this.client.getAttribute(selector, attribute))
           .then((text) => expect(text).to.not.equal(value));
+      case "least":
+        return this.client
+          .pause(pause)
+          .waitForExist(selector, 90000)
+          .then(() => this.client.getAttribute(selector, attribute))
+          .then((text) => expect(parseInt(text)).to.be.at.least(value));
+      case "below":
+        return this.client
+          .pause(pause)
+          .waitForExist(selector, 90000)
+          .then(() => this.client.getAttribute(selector, attribute))
+          .then((text) => expect(parseInt(text)).to.be.below(value));
     }
   }
 
@@ -734,6 +746,30 @@ class CommonClient {
           this.client.waitForExistAndClick(AddProductPage.symfony_toolbar)
         }
       })
+  }
+
+  clickAndOpenOnNewWindow(menuSelector, submenuSelector, id) {
+    return this.client
+      .pause(2000)
+      .scrollWaitForExistAndClick(menuSelector)
+      .pause(2000)
+      .waitForVisible(submenuSelector)
+      .middleClick(submenuSelector)
+      .switchWindow(id)
+  }
+
+  setMachineDate(numberOfDay) {
+    var machineDate = new Date();
+    numberOfDay > 0 ? machineDate = machineDate.setDate(machineDate.getDate() + numberOfDay) : machineDate = machineDate.setDate(machineDate.getDate() - numberOfDay);
+    exec('sudo date -s "' + new Date(machineDate) + '"',
+      (error, stdout, stderr) => {
+        global.error = error;
+      });
+    return this.client
+      .pause(4000)
+      .then(() => {
+        expect(global.error).to.be.a('null');
+      });
   }
 }
 

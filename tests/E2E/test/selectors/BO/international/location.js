@@ -77,7 +77,9 @@ module.exports = {
       restrict_country_selections_button: '//*[@id="conf_id_PS_RESTRICT_DELIVERED_COUNTRIES"]//label[@for="PS_RESTRICT_DELIVERED_COUNTRIES_%B"]',
       country_option_save_button: '//*[@id="country_fieldset_general"]//button',
       bulk_action_button: '//*[@id="form-country"]//button[contains(@class,"dropdown-toggle")]',
-      action_group_button: '(//*[@id="form-country"]//div[contains(@class, "bulk-actions")]//a)[%ID]'
+      action_group_button: '(//*[@id="form-country"]//div[contains(@class, "bulk-actions")]//a)[%ID]',
+      search_input: '//*[@id="table-country"]//input[@name="countryFilter_b!name"]',
+      active_button: '//*[@id="fieldset_0"]//span/label[@for="active_%ACTIVE"]'
     }
   }
 };

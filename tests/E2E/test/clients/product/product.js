@@ -94,9 +94,9 @@ class Product extends CommonClient {
     return this.client
       .scrollTo(AddProductPage.search_add_related_product_input)
       .waitAndSetValue(AddProductPage.search_add_related_product_input, search_products[0])
-      .waitForVisibleAndClick(AddProductPage.related_product_item)
+      .waitForVisibleAndClick(AddProductPage.related_product_item.replace('%I', 1))
       .waitAndSetValue(AddProductPage.search_add_related_product_input, search_products[1])
-      .waitForVisibleAndClick(AddProductPage.related_product_item);
+      .waitForVisibleAndClick(AddProductPage.related_product_item.replace('%I', 1));
   }
 
   addFeature(type, id = '0') {

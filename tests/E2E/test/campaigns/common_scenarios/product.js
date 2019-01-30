@@ -625,4 +625,32 @@ module.exports = {
     await client.waitForExistAndClick(ProductList.filter_by_category_button);
     await client.waitForExistAndClick(ProductList.unselect_filter_link);
   },
+
+  clickOnCoverAndSave(client) {
+    test('should click on "Cover image" checkbox', () => client.waitForExistAndClick(AddProductPage.picture_cover_checkbox));
+    test('should click on "Save image settings" button', () => client.waitForExistAndClick(AddProductPage.picture_save_image_settings_button));
+    /**
+     * This error is due to the bug described in this issue
+     * https://github.com/PrestaShop/PrestaShop/issues/9631
+     **/
+    test('should verify the appearance of the green validation', () => client.checkTextValue(AddProductPage.validation_msg, "Settings updated."));
+  },
+
+  checkTinyMceButtons(client, id) {
+    test('should check the appearance of "Source" button', () => client.isExisting(AddProductPage.tinymce_buttons.replace('%ID', id + 1)));
+    test('should check the appearance of "Color picker" button', () => client.isExisting(AddProductPage.tinymce_buttons.replace('%ID', id + 2)));
+    test('should check the appearance of "Bold" button', () => client.isExisting(AddProductPage.tinymce_buttons.replace('%ID', id + 3)));
+    test('should check the appearance of "Italic" button', () => client.isExisting(AddProductPage.tinymce_buttons.replace('%ID', id + 4)));
+    test('should check the appearance of "Underline" button', () => client.isExisting(AddProductPage.tinymce_buttons.replace('%ID', id + 5)));
+    test('should check the appearance of "Strikethrough" button', () => client.isExisting(AddProductPage.tinymce_buttons.replace('%ID', id + 6)));
+    test('should check the appearance of "Blockquote" button', () => client.isExisting(AddProductPage.tinymce_buttons.replace('%ID', id + 7)));
+    test('should check the appearance of "Insert/edit link" button', () => client.isExisting(AddProductPage.tinymce_buttons.replace('%ID', id + 8)));
+    test('should check the appearance of "Text format" button', () => client.isExisting(AddProductPage.tinymce_buttons.replace('%ID', id + 9)));
+    test('should check the appearance of "Bullet list" button', () => client.isExisting(AddProductPage.tinymce_buttons.replace('%ID', id + 10)));
+    test('should check the appearance of "Numbered list" button', () => client.isExisting(AddProductPage.tinymce_buttons.replace('%ID', id + 11)));
+    test('should check the appearance of "Table" button', () => client.isExisting(AddProductPage.tinymce_buttons.replace('%ID', id + 12)));
+    test('should check the appearance of "Insert/edit image" button', () => client.isExisting(AddProductPage.tinymce_buttons.replace('%ID', id + 13)));
+    test('should check the appearance of "Insert/edit video" button', () => client.isExisting(AddProductPage.tinymce_buttons.replace('%ID', id + 14)));
+    test('should check the appearance of "Presentation" button', () => client.isExisting(AddProductPage.tinymce_buttons.replace('%ID', id + 15)));
+  },
 };

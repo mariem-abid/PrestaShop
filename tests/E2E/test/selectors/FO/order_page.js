@@ -61,7 +61,12 @@ module.exports = {
     modal_content: '//*[@id="blockcart-modal"]//div[@class="modal-content"]',
     cart_page: '//*[@id="cart"]',
     cart_body: '(//*[@id="main"]//div[contains(@class, "body")])[1]',
-    country_list: '//*[@id="delivery-address"]//select[@name="id_country"]'
+    country_list: '//*[@id="delivery-address"]//select[@name="id_country"]',
+    product_name_link: '//*[@id="main"]//li[@class="cart-item"]//a[@class="label"]',
+    product_customization_link: '(//*[@id="main"]//a[text()="Product customization"])[%I]',
+    product_customization_modal: '(//div[contains(@class,"product-customization-line")]/div[%R])[%I]',
+    product_customization_modal_image: '//div[contains(@class,"product-customization-line")]//img',
+    product_customization_close_modal_button: '(//button[@class="close"])[%I]',
   },
   CustomerAccount: {
     order_history_button: '//*[@id="history-link"]',
