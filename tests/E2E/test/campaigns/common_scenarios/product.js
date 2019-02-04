@@ -678,6 +678,67 @@ module.exports = {
     test('should click on "2" link', () => client.clickPageNext(productPage.pagination_number_link.replace('%NUM', 2), 3000));
     test('should click on "1" link', () => client.clickPageNext(productPage.pagination_number_link.replace('%NUM', 1), 3000));
     test('should go back to the Back Office', () => client.switchWindow(0));
-  }
+  },
 
+  function41To49(client, productType, AddProductPage, productPage) {
+    if (productType === 'virtualProduct') {
+      test('should set the "Tax exclude" price', () => client.setPrice(AddProductPage.priceTE_shortcut, '10'));
+      test('should check that the "Tax include" is equal to "12"', () => client.checkAttributeValue(AddProductPage.priceTTC_shortcut, 'value', '12'));
+      test('should set the "Tax rule" to "5.5%"', async () => {
+        await client.waitForExistAndClick(AddProductPage.tax_rule);
+        await client.waitForExistAndClick(AddProductPage.tax_option.replace('%V', '5.5%'), 1000);
+      });
+      test('should check that the "Price (tax incl.)" is equal to "10.55"', () => client.checkAttributeValue(AddProductPage.priceTTC_shortcut, 'value', '10.55'));
+      test('should click on "Save" button', () => client.waitForExistAndClick(AddProductPage.save_product_button, 5000));
+      test('should click on "Preview" button', () => client.waitForExistAndClick(AddProductPage.preview_buttons));
+      test('should go to the Front Office', () => client.switchWindow(1));
+      this.clickOnPreviewLink(client, AddProductPage.preview_link, productPage.product_name);
+      test('should check that the "Product price" is equal to "€10.55"', () => client.checkTextValue(productPage.product_price, '€10.55', 'equal', 3000));
+      test('should go back to the Back Office', () => client.switchWindow(0));
+      test('should remove the tax', async () => {
+        await client.waitForExistAndClick(AddProductPage.tax_rule);
+        await client.waitForExistAndClick(AddProductPage.tax_option.replace('%V', 'No tax'), 1000);
+      });
+      test('should check that the "Tax include" is equal to "10"', () => client.checkAttributeValue(AddProductPage.priceTTC_shortcut, 'value', '10'));
+      test('should start to search a category', () => client.waitAndSetValue(AddProductPage.search_categories, 'Accessories'));
+      test('should get the number of displayed categories', () => client.getNumber(AddProductPage.id_list_categories.split('#')[1], 'li', 'categoriesNumber', '', 2000));
+      test('check if the displayed categories contains "Accessories"', async () => {
+        for (let i = 1; i <= global.tab['categoriesNumber']; i++)
+          await client.checkTextValue(AddProductPage.list_name_category.replace('%P', i), 'Accessories', 'contain', 1000);
+      });
+      test('should search "Clothes" category', () => client.waitAndSetValue(AddProductPage.search_categories, 'Clothes'));
+      test('should associate "Clothes" category to the created product', () => client.waitForExistAndClick(AddProductPage.list_categories, 1000));
+      test('should check that the tag of "Clothes" category is well displayed', () => client.checkTextValue(AddProductPage.tag_category.replace("%NAME", 'Clothes'), 'Clothes'));
+      test('should check that "Clothes" category is checked', () => client.checkCheckboxStatus(AddProductPage.category_checkbox_input.replace("%ID", global.tab['categeoryID']), true));
+      test('should uncheck "Clothes" category', () => client.waitForExistAndClick(AddProductPage.category_checkbox_input.replace("%ID", global.tab['categeoryID']), 1000));
+      test('should check "Clothes" category', () => client.waitForExistAndClick(AddProductPage.category_checkbox_input.replace("%ID", global.tab['categeoryID']), 1000));
+      test('should check that the tag of "Clothes" category is well displayed', () => client.checkTextValue(AddProductPage.tag_category.replace("%NAME", 'Clothes'), 'Clothes'));
+      test('should check that "Clothes" category is checked', () => client.checkCheckboxStatus(AddProductPage.category_checkbox_input.replace("%ID", global.tab['categeoryID']), true));
+      test('should delete the tag of "Clothes" category', () => client.waitForExistAndClick(AddProductPage.delete_tag_category.replace("%ID", global.tab['categeoryID'])));
+      test('should check that "Clothes" category is unchecked', () => client.checkCheckboxStatus(AddProductPage.category_checkbox_input.replace("%ID", global.tab['categeoryID']), false));
+      test('should check "Clothes" category', () => client.waitForExistAndClick(AddProductPage.category_checkbox_input.replace("%ID", global.tab['categeoryID']), 1000));
+      test('should uncheck "Clothes" category', () => client.waitForExistAndClick(AddProductPage.category_checkbox_input.replace("%ID", global.tab['categeoryID']), 1000));
+      test('should check that the tag of "Clothes" category is not existing', () => client.isNotExisting(AddProductPage.delete_tag_category.replace("%ID", global.tab['categeoryID'])));
+      test('should click on "Collapse" button', () => client.scrollWaitForExistAndClick(AddProductPage.category_collapse_button, 150, 1000));
+      test('should check that the tree is reduced', () => client.checkIsNotVisible(AddProductPage.category_checkbox_input.replace("%ID", global.tab['categeoryID'])));
+      test('should click on "Expand" button', () => client.scrollWaitForExistAndClick(AddProductPage.category_expand_button, 150, 1000));
+      test('should check that the tree is expanded', () => client.checkIsVisible(AddProductPage.category_checkbox_input.replace("%ID", global.tab['categeoryID'])));
+      /** Manque "Je sélectionne la catégorie par défaut, elle est là meme après sauvegarde." **/
+      test('should click on "Create a category" button', () => client.scrollWaitForExistAndClick(AddProductPage.product_create_category_btn));
+      test('should check the existence of "New category name" input', () => client.isExisting(AddProductPage.product_category_name_input, 1000));
+      test('should check the existence of Parent of the category" select', () => client.isExisting(AddProductPage.parent_category_select));
+      test('should set the "New category name" input', () => client.waitAndSetValue(AddProductPage.product_category_name_input, data.virtual.new_category_name + date_time));
+      test('should choose "Clothes" as Parent of the category from the dropdown list', async () => {
+        await client.scrollWaitForExistAndClick(AddProductPage.parent_category_select);
+        await client.waitForVisibleAndClick(AddProductPage.parent_category_option.replace('%N', "Clothes"));
+      });
+      test('should click on "Create" button', () => client.scrollWaitForExistAndClick(AddProductPage.category_create_btn));
+      test('should get "ID" of the created category', async () => {
+        await client.pause(2000);
+        await client.getAttributeInVar(AddProductPage.category_radio.replace("%S", data.virtual.new_category_name + date_time), "value", "IDcreatedCategory");
+      });
+      test('should define the new category created "main category"', () => client.scrollWaitForExistAndClick(AddProductPage.main_category.replace("%ID", global.tab["IDcreatedCategory"])));
+      /** Manque Au survol, le tag affiche le chemin complet de la catégorie **/
+    }
+  }
 };

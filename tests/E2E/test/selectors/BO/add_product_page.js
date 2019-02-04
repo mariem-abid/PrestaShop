@@ -252,6 +252,16 @@ module.exports = {
     category_label:'//*[@id="form_step1_categories"]//label[text()[contains(.,"%CATEGORY")]]',
     brand_option:'//*[@id="select2-form_step1_id_manufacturer-results"]/li[contains(text(),"%BRAND")]',
     tax_option:'//*[@id="select2-step2_id_tax_rules_group_rendered-results"]/li[contains(text(),"%V")]',
+    parent_category_select: '//*[@id="select2-form_step1_new_category_id_parent-container"]',
+    category_checkbox_input:'#form_step1_categories input[value="%ID"][type="checkbox"]',
+    category_expand_button: '//*[@id="categories-tree-expand"]',
+    category_collapse_button: '//*[@id="categories-tree-reduce"]',
+    id_list_categories:'#ui-id-1',
+    list_name_category:'//*[@id="ui-id-1"]/li[%P]/a',
+    tag_category:'//*[@id="ps_categoryTags"]//span[contains(text(),"%NAME")]',
+    delete_tag_category:'//*[@id="ps_categoryTags"]//a[@data-id="%ID"]',
+    parent_category_option: '//*[@id="select2-form_step1_new_category_id_parent-results"]/li[text()="%N"]',
+    main_category:'(//*[@id="form_step1_categories"]//input[@value="%ID"])[2]'
   },
   ProductList: {
     product_id: '//*[@id="product_catalog_list"]//tr[%ID]/td[2]/label',

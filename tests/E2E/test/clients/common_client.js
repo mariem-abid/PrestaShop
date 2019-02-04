@@ -212,7 +212,10 @@ class CommonClient {
     return this.client
       .waitForExist(selector, timeout)
       .then(() => this.client.getAttribute(selector, attribute))
-      .then((variable) => global.tab[globalVar] = variable);
+      .then((variable) => {
+        global.tab[globalVar] = variable;
+        console.log(global.tab[globalVar])
+      });
   }
 
   checkTextValue(selector, textToCheckWith, parameter = 'equal', pause = 0) {
@@ -744,6 +747,39 @@ class CommonClient {
 
   closeFrame() {
     return this.client.frameParent();
+  }
+
+  getNumber(selector, attribute, value, option = "", wait = 0) {
+    return this.client
+      .pause(wait)
+      .execute(function (selector, attribute, option) {
+        if (option === "children") {
+          return document.getElementById(selector).getElementsByTagName(attribute)[0].children.length;
+        } else {
+          return document.getElementById(selector).getElementsByTagName(attribute).length;
+        }
+      }, selector, attribute, option)
+      .then((count) => {
+        global.tab[value] = count.value;
+      });
+  }
+
+  checkCheckboxStatus(selector, checkedValue) {
+    return this.client
+      .pause(2000)
+      .execute(function (selector) {
+        return (document.querySelector(selector).checked);
+      }, selector)
+      .then((status) => {
+        expect(status.value).to.equal(checkedValue)
+      });
+  }
+
+  checkIsVisible(selector) {
+    return this.client
+      .pause(2000)
+      .isVisible(selector)
+      .then((isVisible) => expect(isVisible).to.be.true);
   }
 }
 
