@@ -225,11 +225,15 @@ class CommonClient {
           .then((text) => expect(text).to.contain(textToCheckWith));
         break;
       case "equal":
+console.log(selector);
+console.log(textToCheckWith);
         return this.client
           .pause(pause)
           .waitForExist(selector, 9000)
           .then(() => this.client.getText(selector))
-          .then((text) => expect(text).to.equal(textToCheckWith));
+          .then((text) =>{
+            console.log(text);
+            expect(text).to.equal(textToCheckWith)});
         break;
       case "deepequal":
         return this.client

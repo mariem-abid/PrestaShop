@@ -678,6 +678,14 @@ module.exports = {
     test('should click on "2" link', () => client.clickPageNext(productPage.pagination_number_link.replace('%NUM', 2), 3000));
     test('should click on "1" link', () => client.clickPageNext(productPage.pagination_number_link.replace('%NUM', 1), 3000));
     test('should go back to the Back Office', () => client.switchWindow(0));
-  }
+  },
+  function106To117(client, productType, AddProductPage, productPage) {
+    if (productType === 'virtualProduct') {
+      test('should click on "Preview" button', () => client.waitForExistAndClick(AddProductPage.preview_buttons));
+      test('should go to the Front Office', () => client.switchWindow(1));
+      this.clickOnPreviewLink(client, AddProductPage.preview_link, productPage.product_name);
+      test('should check that the meta title is equal to the product title', () => client.checkTextValue(productPage.product_title,data.virtual.name + date_time,'equal',1000));
 
+    }
+  }
 };

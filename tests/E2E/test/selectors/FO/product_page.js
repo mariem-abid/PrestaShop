@@ -54,6 +54,7 @@ module.exports = {
     product_feature_text: '#product-details > section dt:%B-of-type',
     product_tax_label: '//*[@id="main"]//div[@class="tax-shipping-delivery-label" and (contains(text(),"Tax excluded") or contains(text(),"Tax included") )] ',
     file_description: '//*[@id="attachments"]/section/div/p',
-    pagination_number_link: '//*[@id="js-product-list"]//nav//a[contains(text(), "%NUM")]'
+    pagination_number_link: '//*[@id="js-product-list"]//nav//a[contains(text(), "%NUM")]',
+    product_title:'//title'
   }
 };
