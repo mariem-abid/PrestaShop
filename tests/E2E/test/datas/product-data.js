@@ -66,10 +66,10 @@ module.exports = {
       search: "Printed Chiffon Dress",
       quantity: "3"
     },
-    attached_file_name: "File to download",
-    allowed_number_to_download: "10",
+    attached_file_name: "file_to_download",
+    allowed_number_to_download: "3",
     expiration_date: common.getCustomDate(30),
-    number_of_days: '10'
+    number_of_days: '3'
   },
 
   common: {

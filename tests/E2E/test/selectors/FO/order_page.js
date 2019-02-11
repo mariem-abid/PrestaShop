@@ -106,6 +106,7 @@ module.exports = {
     add_message_block: '//*[@id="content"]/section[@class="order-message-form box"]',
     message_input: '//*[@id="content"]//textarea[@name="msgText"]',
     send_button: '//*[@id="content"]//button[@name="submitMessage"]',
-    success_panel: '//*[@id="notifications"]//article[@class="alert alert-success"]'
+    success_panel: '//*[@id="notifications"]//article[@class="alert alert-success"]',
+    product_name:'//*[@id="order-products"]//td[1]//a[contains(text(),"%PRODUCTNAME")]'
   }
 };
