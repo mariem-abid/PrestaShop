@@ -6,6 +6,7 @@ const {TrafficAndSeo} = require('../../selectors/BO/shopParameters/shop_paramete
 const {AccessPageBO} = require('../../selectors/BO/access_page');
 const {AccessPageFO} = require('../../selectors/FO/access_page');
 let data = require('../../datas/product-data');
+let common = require('../../common.webdriverio');
 global.productVariations = [];
 global.productCategories = {HOME: {}};
 global.categories = {HOME: {}};
@@ -678,6 +679,192 @@ module.exports = {
     test('should click on "2" link', () => client.clickPageNext(productPage.pagination_number_link.replace('%NUM', 2), 3000));
     test('should click on "1" link', () => client.clickPageNext(productPage.pagination_number_link.replace('%NUM', 1), 3000));
     test('should go back to the Back Office', () => client.switchWindow(0));
-  }
+  },
+  function50To59(client, productType, AddProductPage, productPage, CheckoutOrderPage, accountPage, OrderPage, SearchProductPage, data) {
+    if (productType === 'standard') {
+      test('should set the "Quantity" of product', () => client.waitAndSetValue(AddProductPage.quantity_shortcut_input, data.common.quantity));
+      test('should click on "Save" button', () => client.waitForExistAndClick(AddProductPage.save_product_button, 5000));
+      test('should click on "Preview" button', () => client.waitForExistAndClick(AddProductPage.preview_buttons));
+      test('should go to the Front Office', () => client.switchWindow(1));
+      this.clickOnPreviewLink(client, AddProductPage.preview_link, productPage.product_name);
+      test('should check that the "Product quantity" is equal to ' + data.common.quantity, () => client.checkTextValue(productPage.product_quantity, data.common.quantity, 'contain', 1000));
+      test('should click on "Add to cart" button ', () => client.waitForExistAndClick(CheckoutOrderPage.add_to_cart_button, 3000));
+      test('should click on proceed to checkout button 1', () => client.waitForVisibleAndClick(CheckoutOrderPage.proceed_to_checkout_modal_button));
+      test('should set the quantity to "4" using the keyboard', () => client.waitAndSetValue(CheckoutOrderPage.quantity_input.replace('%NUMBER', 1), '4'));
+      test('should click on proceed to checkout button 2', () => client.waitForExistAndClick(CheckoutOrderPage.proceed_to_checkout_button));
+      scenario('Create new account', client => {
+        test('should choose a "Social title"', () => client.waitForExistAndClick(accountPage.gender_radio_button));
+        test('should set the "First name" input', () => client.waitAndSetValue(accountPage.firstname_input, 'test'));
+        test('should set the "Last name" input', () => client.waitAndSetValue(accountPage.lastname_input, 'test'));
+        test('should set the "Email" input', () => client.waitAndSetValue(accountPage.new_email_input, global.date_time + 'pub@prestashop.com'));
+        test('should set the "Password" input', () => client.waitAndSetValue(accountPage.password_account_input, '123456789'));
+        test('should click on "CONTINUE" button', () => client.waitForExistAndClick(accountPage.new_customer_btn));
+      }, 'common_client');
+      scenario('Add new address', client => {
+        test('should set the "company" input', () => client.waitAndSetValue(CheckoutOrderPage.company_input, 'prestashop'));
+        test('should set "VAT number" input', () => client.waitAndSetValue(CheckoutOrderPage.vat_number_input, '0123456789'));
+        test('should set "Address" input', () => client.waitAndSetValue(CheckoutOrderPage.address_input, '12 rue d\'amsterdam'));
+        test('should set "Second address" input', () => client.waitAndSetValue(CheckoutOrderPage.address_second_input, 'RDC'));
+        test('should set "Postal code" input', () => client.waitAndSetValue(CheckoutOrderPage.zip_code_input, '75009'));
+        test('should set "City" input', () => client.waitAndSetValue(CheckoutOrderPage.city_input, 'Paris'));
+        test('should set "Pays" input', () => client.waitAndSelectByVisibleText(CheckoutOrderPage.country_input, 'France'));
+        test('should set "Home phone" input', () => client.waitAndSetValue(CheckoutOrderPage.phone_input, '0123456789'));
+        test('should click on "Use this address for invoice too', () => client.waitForExistAndClick(CheckoutOrderPage.use_address_for_facturation_input));
+        test('should click on "CONTINUE', () => client.waitForExistAndClick(accountPage.new_address_btn));
 
+        scenario('Add Invoice Address', client => {
+          test('should set the "company" input', () => client.waitAndSetValue(CheckoutOrderPage.invoice_company_input, 'prestashop'));
+          test('should set "VAT number" input', () => client.waitAndSetValue(CheckoutOrderPage.invoice_vat_number_input, '0123456789'));
+          test('should set "Address" input', () => client.waitAndSetValue(CheckoutOrderPage.invoice_address_input, '12 rue d\'amsterdam'));
+          test('should set "Second address" input', () => client.waitAndSetValue(CheckoutOrderPage.invoice_address_second_input, 'RDC'));
+          test('should set "Postal code" input', () => client.waitAndSetValue(CheckoutOrderPage.invoice_zip_code_input, '75009'));
+          test('should set "City" input', () => client.waitAndSetValue(CheckoutOrderPage.invoice_city_input, 'Paris'));
+          test('should set "Pays" input', () => client.waitAndSelectByVisibleText(CheckoutOrderPage.invoice_country_input, 'France'));
+          test('should set "Home phone" input', () => client.waitAndSetValue(CheckoutOrderPage.invoice_phone_input, '0123456789'));
+          test('should click on "CONTINUE" button', () => client.waitForExistAndClick(accountPage.new_address_btn));
+          test('should click on "confirm delivery" button', () => client.waitForExistAndClick(CheckoutOrderPage.checkout_step3_continue_button));
+        }, 'common_client');
+      }, 'common_client');
+      scenario('Choose "PAYMENT" method', client => {
+        test('should set the payment type "Payment by bank wire"', () => client.waitForExistAndClick(CheckoutOrderPage.checkout_step4_payment_radio));
+        test('should set "the condition to approve"', () => client.waitForExistAndClick(CheckoutOrderPage.condition_check_box));
+        test('should click on order with an obligation to pay button', () => client.waitForExistAndClick(CheckoutOrderPage.confirmation_order_button));
+        test('should get the order reference"', () => client.getTextInVar(CheckoutOrderPage.order_reference, 'orderReference'));
+      }, 'common_client');
+      scenario('Check that the available stock of the created product is decremented in the Back Office', client => {
+        test('should go back to the Back Office', () => client.switchWindow(0));
+        test('should check that the available stock of the created product is decremented', () => client.checkAttributeValue(AddProductPage.quantity_shortcut_input, 'value', (parseInt(data.common.quantity) - 4).toString()));
+      }, 'common_client');
+      scenario('Check that the quantity of the created product is decremented in the Front Office', client => {
+        test('should click on "Preview" button', () => client.waitForExistAndClick(AddProductPage.preview_buttons));
+        test('should go to the Front Office', () => client.switchWindow(2));
+        test('should check that the "Product quantity"', () => client.checkTextValue(productPage.product_quantity, (parseInt(data.common.quantity) - 4).toString(), 'contain', 1000));
+      }, 'common_client');
+      scenario('Check the quantity of the product after canceling the order in the Back Office', client => {
+        test('should go back to the Back Office', () => client.switchWindow(0));
+        test('should check that the "Product quantity"', () => client.checkAttributeValue(AddProductPage.quantity_shortcut_input, 'value', (parseInt(data.common.quantity) - 4).toString(), 'contain', 1000));
+        test('should go to "Orders" page', () => client.goToSubtabMenuPage(Menu.Sell.Orders.orders_menu, Menu.Sell.Orders.orders_submenu));
+        test('should search for the created order by reference', () => client.waitAndSetValue(OrderPage.search_by_reference_input, (global.tab['orderReference']).split(" ")[2]));
+        test('should go to search order', () => client.waitForExistAndClick(OrderPage.search_order_button));
+        test('should go to the order', () => client.scrollWaitForExistAndClick(OrderPage.view_order_button.replace('%NUMBER', 1), 150, 2000));
+        test('should change order state to "payment accepted"', () => client.changeOrderState(OrderPage, 'Canceled'));
+        test('should go to "Products" page', () => client.goToSubtabMenuPage(Menu.Sell.Catalog.catalog_menu, Menu.Sell.Catalog.products_submenu));
+        test('should search for product by name', () => client.searchProductByName(data.standard.name + date_time));
+        test('should check that the product quantity is equal to ' + data.common.quantity, () => client.checkTextValue(AddProductPage.catalog_product_quantity, data.common.quantity));
+      }, 'product/check_product');
+      scenario('Set the minimum quantity of the product', client => {
+        test('should click on "Edit" button', () => client.waitForExistAndClick(ProductList.edit_button));
+        test('should click on "Quantities"', () => client.waitForExistAndClick(AddProductPage.product_quantities_tab));
+        test('should set the "Minimum quantity for sale"', () => client.waitAndSetValue(AddProductPage.minimum_quantity_sale, '2'));
+        test('should click on "Save" button', () => client.waitForExistAndClick(AddProductPage.save_product_button, 1000));
+      }, 'common_client');
+      scenario('Check the quantity of the created product in the Front Office', client => {
+        test('should go to the Front Office', () => {
+          return promise
+            .then(() => client.switchWindow(2))
+            .then(() => client.refresh());
+        });
+        test('should check that the quantity of the FO selector is equal to "2"', () => client.checkAttributeValue(productPage.first_product_quantity, 'min', '2'));
+        test('should decrease quantity of product using the arrow down button', () => client.waitForExistAndClick(productPage.quantity_arrow_down_button));
+        test('should check that it is impossible to minimize the quantity of the product', () => client.checkAttributeValue(productPage.first_product_quantity, 'min', '2'));
+        test('should check the message that indicates the minimum quantity', () => client.checkTextValue(productPage.message_minimum_quantity, 'The minimum purchase order quantity for the product is 2.'));
+        test('should check that it is possible to order more than the minimum quantity', () => client.waitForExistAndClick(productPage.quantity_arrow_up_button));
+      }, 'common_client');
+      scenario('Check the quantity of the created product in the Front Office from the quickview', client => {
+        test('should search for the product', () => client.searchByValue(SearchProductPage.search_input, SearchProductPage.search_button, data.standard.name + date_time));
+        test('should click on "Quick view" button', () => {
+          return promise
+            .then(() => client.moveToObject(SearchProductPage.product_result_name))
+            .then(() => client.waitForExistAndClick(SearchProductPage.quick_view_first_product, 2000))
+            .then(() => client.pause(2000));
+        });
+        test('should check that the quantity of the FO selector is equal to "2"', () => client.checkAttributeValue(productPage.first_product_quantity, 'min', '2'));
+        test('should decrease quantity of product using the arrow down button', () => client.waitForExistAndClick(productPage.quantity_arrow_down_button));
+        test('should check that it is impossible to minimize the quantity of the product', () => client.checkAttributeValue(productPage.first_product_quantity, 'min', '2'));
+        test('should check the message that indicates the minimum quantity', () => client.checkTextValue(productPage.message_minimum_quantity, 'The minimum purchase order quantity for the product is 2.'));
+        test('should check that it is possible to order more than the minimum quantity', () => client.waitForExistAndClick(productPage.quantity_arrow_up_button));
+      }, 'product/product');
+      /** Manque Si la case "M'envoyer un email quand la quantité est en dessous ou égale à ce niveau" est cochée, alors je reçoit un mail avec le nom du produit quand le produit atteint la quantité renseignée **/
+      scenario('Check "Deny orders" in the Back Office and verify that the product can not be selected in the front office', client => {
+        test('should go back to the Back Office', () => client.switchWindow(0));
+        test('should check the "Deny orders"', () => client.waitForExistAndClick(AddProductPage.deny_orders));
+        test('should click on "Save" button', () => client.waitForExistAndClick(AddProductPage.save_product_button, 1000));
+        test('should go back to the Front Office', () => client.switchWindow(2));
+        test('should click on "Quick view" button', () => {
+          return promise
+            .then(() => client.moveToObject(SearchProductPage.product_result_name))
+            .then(() => client.waitForExistAndClick(SearchProductPage.quick_view_first_product, 2000))
+            .then(() => client.pause(2000));
+        });
+        test('should set the product "quantity"', () => client.waitAndSetValue(productPage.first_product_quantity, parseInt(data.common.quantity) + 2));
+        test('should check the message indicating the out of stock of the product', () => client.checkTextValue(productPage.product_availability_message, 'There are not enough products in stock', 'contain', 2000));
+        test('should check that the "Add to cart" button is disabled', () => client.isVisible(productPage.quick_view_add_to_cart_disbled));
+      }, 'common_client');
+      scenario('Check "Allow orders" in the Back Office and verify that the product can be selected in the front office', client => {
+        test('should go back to the Back Office', () => client.switchWindow(0));
+        test('should check the "Allow orders"', () => client.waitForExistAndClick(AddProductPage.allow_orders));
+        test('should click on "Save" button', () => client.waitForExistAndClick(AddProductPage.save_product_button, 1000));
+        test('should go back to the Front Office', () => client.switchWindow(2));
+        test('should click on "Quick view" button', () => {
+          return promise
+            .then(() => client.moveToObject(SearchProductPage.product_result_name))
+            .then(() => client.waitForExistAndClick(SearchProductPage.quick_view_first_product, 2000))
+            .then(() => client.pause(2000));
+        });
+        test('should set the product "quantity"', () => client.waitAndSetValue(productPage.first_product_quantity, parseInt(data.common.quantity) + 2));
+        test('should check that the "Add to cart" button is not disabled', () => client.isVisible(productPage.quick_view_add_to_cart));
+      }, 'common_client');
+      scenario('Check "Use default behavior" in the Back Office and verify that the product can not be selected in the front office', client => {
+        test('should go back to the Back Office', () => client.switchWindow(0));
+        test('should check the "Use default behavior"', () => client.waitForExistAndClick(AddProductPage.default_behavior));
+        test('should click on "Save" button', () => client.waitForExistAndClick(AddProductPage.save_product_button, 1000));
+        test('should go back to the Front Office', () => client.switchWindow(2));
+        test('should click on "Quick view" button', () => {
+          return promise
+            .then(() => client.moveToObject(SearchProductPage.product_result_name))
+            .then(() => client.waitForExistAndClick(SearchProductPage.quick_view_first_product, 2000))
+            .then(() => client.pause(2000));
+        });
+        test('should set the product "quantity"', () => client.waitAndSetValue(productPage.first_product_quantity, parseInt(data.common.quantity) + 2));
+        test('should check the message indicating the out of stock of the product', () => client.checkTextValue(productPage.product_availability_message, 'There are not enough products in stock', 'contain', 2000));
+        test('should check that the "Add to cart" button is disabled', () => client.isVisible(productPage.quick_view_add_to_cart_disbled));
+      }, 'common_client');
+      scenario('Add a label when the product is in stock in the back office and check it in the front office', client => {
+        test('should go back to the Back Office', () => client.switchWindow(0));
+        test('should set the label when the product is in stock', () => client.waitAndSetValue(AddProductPage.pack_label_in_stock, 'In stock'));
+        test('should click on "Save" button', () => client.waitForExistAndClick(AddProductPage.save_product_button, 1000));
+        test('should go back to the Front Office', () => client.switchWindow(2));
+        test('should click on "Quick view" button', () => {
+          return promise
+            .then(() => client.moveToObject(SearchProductPage.product_result_name))
+            .then(() => client.waitForExistAndClick(SearchProductPage.quick_view_first_product, 2000))
+            .then(() => client.pause(2000));
+        });
+        test('should check the existence of the label "In stock"', () => client.checkTextValue(productPage.product_availability_message, 'In stock', 'contain'));
+      }, 'common_client');
+      scenario('Add a label when the product is in stock in the back office and check it in the front office', client => {
+        test('should go back to the Back Office', () => client.switchWindow(0));
+        test('should check the "Allow orders"', () => client.waitForExistAndClick(AddProductPage.allow_orders));
+        test('should set the label when the product is out of stock', () => client.waitAndSetValue(AddProductPage.pack_label_out_stock, 'Out of stock'));
+        test('should click on "Save" button', () => client.waitForExistAndClick(AddProductPage.save_product_button, 1000));
+        test('should go back to the Front Office', () => client.switchWindow(2));
+        test('should click on "Quick view" button', () => {
+          return promise
+            .then(() => client.moveToObject(SearchProductPage.product_result_name))
+            .then(() => client.waitForExistAndClick(SearchProductPage.quick_view_first_product, 2000))
+            .then(() => client.pause(2000));
+        });
+        test('should set the product "quantity"', () => client.waitAndSetValue(productPage.first_product_quantity, parseInt(data.common.quantity) + 2));
+        test('should check the existence of the label "Out of stock"', () => client.checkTextValue(productPage.product_availability_message, 'Out of stock', 'contain', 2000));
+      }, 'common_client');
+      scenario('Set the availability date of the product in the back office and check it in the front office', client => {
+        test('should go back to the Back Office', () => client.switchWindow(0));
+        test('should set the "Availability date" of the product in the Back Office', () => client.waitAndSetValue(AddProductPage.pack_availability_date, common.getCustomDate(0)));
+        test('should click on "Save" button', () => client.waitForExistAndClick(AddProductPage.save_product_button, 1000));
+        test('should click on "Preview" button', () => client.waitForExistAndClick(AddProductPage.preview_buttons));
+        test('should go to the Front Office', () => client.switchWindow(3));
+        test('should check the "Availability date" of the product in the Front Office', () => client.checkTextValue(productPage.product_availability_date, common.getCustomDate(0), 'equal', 3000));
+      }, 'common_client');
+    }
+  }
 };

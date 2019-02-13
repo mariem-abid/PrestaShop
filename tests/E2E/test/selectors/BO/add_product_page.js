@@ -252,6 +252,9 @@ module.exports = {
     category_label:'//*[@id="form_step1_categories"]//label[text()[contains(.,"%CATEGORY")]]',
     brand_option:'//*[@id="select2-form_step1_id_manufacturer-results"]/li[contains(text(),"%BRAND")]',
     tax_option:'//*[@id="select2-step2_id_tax_rules_group_rendered-results"]/li[contains(text(),"%V")]',
+    deny_orders:'//*[@id="form_step3_out_of_stock_0"]',
+    allow_orders:'//*[@id="form_step3_out_of_stock_1"]',
+    default_behavior:'//*[@id="form_step3_out_of_stock_2"]',
   },
   ProductList: {
     product_id: '//*[@id="product_catalog_list"]//tr[%ID]/td[2]/label',
