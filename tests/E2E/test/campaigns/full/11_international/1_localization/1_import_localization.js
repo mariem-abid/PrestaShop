@@ -3,14 +3,14 @@
  * [id="PS-141"][Name="Import a localization pack and check you can use it"]
  **/
 
-const {AccessPageBO} = require('../../../../../selectors/BO/access_page');
-const commonLocalization = require('../../../../common_scenarios/localization');
-const commonCurrency = require('../../../../common_scenarios/currency');
-const {Menu} = require('../../../../../selectors/BO/menu.js');
-const {Taxes} = require('../../../../../selectors/BO/international/taxes');
-const {Location} = require('../../../../../selectors/BO/international/location');
-const {Localization} = require('../../../../../selectors/BO/international/localization');
-const welcomeScenarios = require('../../../../common_scenarios/welcome');
+const {AccessPageBO} = require('../../../../selectors/BO/access_page');
+const commonLocalization = require('../../../common_scenarios/localization');
+const commonCurrency = require('../../../common_scenarios/currency');
+const {Menu} = require('../../../../selectors/BO/menu.js');
+const {Taxes} = require('../../../../selectors/BO/international/taxes');
+const {Location} = require('../../../../selectors/BO/international/location');
+const {Localization} = require('../../../../selectors/BO/international/localization');
+const welcomeScenarios = require('../../../common_scenarios/welcome');
 
 const firstCurrencyData = {
     name: 'AED',
