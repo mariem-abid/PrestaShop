@@ -40,6 +40,7 @@ global.adminPassword = argv.ADMIN_PASSWORD || 'prestashop_demo';
 
 global._projectdir = path.join(__dirname, '..', '..');
 global.debugFile = argv.DEBUG_FILE || _projectdir + '/../config/defines.inc.php';
+global.projectTestDir = argv.projectTestDestination || _projectdir;
 global.new_customer_email = 'pub' + date_time + '@prestashop.com';
 global.categoryImage = path.join(__dirname, '', 'datas', 'category_image.png');
 global.categoryThumb = path.join(__dirname, '', 'datas', 'category_miniature.png');
