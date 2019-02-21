@@ -2,7 +2,6 @@ const {HomePage} = require('../../selectors/FO/home_page');
 const {productPage} = require('../../selectors/FO/product_page');
 const {CheckoutOrderPage} = require('../../selectors/FO/order_page');
 const {Localization} = require('../../selectors/BO/international/localization');
-const {InternationalPage} = require('../../selectors/BO/international/index');
 const {Menu} = require('../../selectors/BO/menu.js');
 const {ThemeAndLogo} = require('../../selectors/BO/design/theme_and_logo');
 const Design = require('../../selectors/BO/design/index');
@@ -155,6 +154,11 @@ module.exports = {
       test('should go to "Localization" page', () => client.goToSubtabMenuPage(Menu.Improve.International.international_menu, Menu.Improve.International.localization_submenu));
       test('should click on "Languages" tab', () => client.waitForExistAndClick(Menu.Improve.International.languages_tab));
       test('should click on "Add new language" button', () => client.waitForExistAndClick(Localization.languages.add_new_language_button));
+      test('should check then close the "Symfony" toolbar', () => {
+        return promise
+          .then(() => client.waitForSymfonyToolbar(AddProductPage, 2000))
+          .then(() => client.pause(1000));
+      });
       test('should set the "Name" input', () => client.waitAndSetValue(Localization.languages.name_input, languageData.name + date_time));
       test('should set the "ISO code" input', () => client.waitAndSetValue(Localization.languages.iso_code_input, languageData.iso_code));
       test('should set the "Language code" input', () => client.waitAndSetValue(Localization.languages.language_code_input, languageData.language_code));
@@ -165,7 +169,7 @@ module.exports = {
       test('should switch the "Is RTL language"', () => client.waitForExistAndClick(Localization.languages.is_rtl_button.replace('%S', languageData.is_rtl)));
       test('should switch the "Status"', () => client.waitForExistAndClick(Localization.languages.status_button.replace('%S', languageData.status)));
       test('should click on "Save" button', () => client.waitForExistAndClick(Localization.languages.save_button));
-      test('should verify the appearance of the green validation', () => client.checkTextValue(InternationalPage.success_panel, '×\nSuccessful creation.'));
+      test('should verify the appearance of the green validation', () => client.checkTextValue(Localization.languages.success_alert, 'Successful creation.'));
     }, 'common_client');
   },
   editLanguage: function (name, languageData) {
@@ -188,7 +192,7 @@ module.exports = {
         test('should switch the "Status"', () => client.waitForExistAndClick(Localization.languages.status_button.replace('%S', languageData.status)));
       }
       test('should click on "Save" button', () => client.waitForExistAndClick(Localization.languages.save_button));
-      test('should verify the appearance of the green validation', () => client.checkTextValue(InternationalPage.success_panel, '×\nSuccessful update.'));
+      test('should verify the appearance of the green validation', () => client.checkTextValue(Localization.languages.success_alert, 'Successful update.'));
     }, 'common_client');
   },
   checkLanguageBO: function (languageData) {
@@ -271,14 +275,18 @@ module.exports = {
       test('should click on "dropdown toggle" button', () => client.waitForExistAndClick(Localization.languages.dropdown_button));
       test('should click on "Delete" button', () => client.waitForExistAndClick(Localization.languages.delete_button));
       test('should accept the confirmation alert', () => client.alertAccept());
-      test('should verify the appearance of the green validation', () => client.checkTextValue(InternationalPage.success_panel, '×\nSuccessful deletion.'));
+      test('should verify the appearance of the green validation', () => client.checkTextValue(Localization.languages.success_alert, 'Successful deletion.'));
       test('should click on "Reset" button', () => client.waitForExistAndClick(Localization.languages.reset_button));
     }, 'common_client');
   },
   generateRtlStylesheet: function () {
     scenario('Generate RTL stylesheet', client => {
-      test('should go to "Theme & logo" page', () => client.goToSubtabMenuPage(Menu.Improve.Design.design_menu, Menu.Improve.Design.theme_logo_submenu));
-      test('should switch the "Generate RTL stylesheet" to "YES"', () => client.waitForExistAndClick(ThemeAndLogo.generate_rtl_stylesheet_button.replace('%S', 'on')));
+      test('should go to "Theme & logo" page', () => {
+        return promise
+          .then(() => client.waitForVisibleAndClick(Menu.Improve.Design.design_menu,1000))
+          .then(() => client.waitForExistAndClick( Menu.Improve.Design.theme_logo_submenu,1000));
+      });
+      test('should switch the "Generate RTL stylesheet" to "YES"', () => client.waitForExistAndClick(ThemeAndLogo.generate_rtl_stylesheet_button.replace('%S', '1')));
       test('should click on "Save" button', () => client.waitForExistAndClick(ThemeAndLogo.save_button));
       test('should verify the appearance of the green validation', () => client.checkTextValue(Design.success_panel, 'Your RTL stylesheets has been generated successfully'));
     }, 'common_client');

@@ -17,8 +17,8 @@ let languageData = [{
   date_format_full: 'Y-m-d H:i:s',
   flag_file: 'language_spanish_flag.png',
   no_picture_file: 'no_image_available.png',
-  is_rtl: 'off',
-  status: 'on'
+  is_rtl: '0',
+  status: '1'
 }, {
   name: 'Farsi',
   iso_code: 'FA',
@@ -27,8 +27,8 @@ let languageData = [{
   date_format_full: 'Y-m-d H:i:s',
   flag_file: 'language_farsi_flag.png',
   no_picture_file: 'no_image_available.png',
-  is_rtl: 'on',
-  status: 'on'
+  is_rtl: '1',
+  status: '1'
 }], languageEditedData = [{
   name: 'Spanishh',
   iso_code: 'ES',
@@ -37,8 +37,8 @@ let languageData = [{
   date_format_full: 'Y-m-d H:i:s',
   flag_file: 'language_spanish_flag.png',
   no_picture_file: 'no_image_available.png',
-  is_rtl: 'off',
-  status: 'on'
+  is_rtl: '0',
+  status: '1'
 }, {
   name: 'Spanishh',
   iso_code: 'ES',
@@ -47,8 +47,8 @@ let languageData = [{
   date_format_full: 'Y-m-d H:i:s',
   flag_file: 'language_spanish_flag.png',
   no_picture_file: 'no_image_available.png',
-  is_rtl: 'off',
-  status: 'off'
+  is_rtl: '0',
+  status: '0'
 }];
 
 scenario('Create, edit, delete and check "Languages" in the Back Office', () => {
@@ -73,7 +73,7 @@ scenario('Create, edit, delete and check "Languages" in the Back Office', () => 
     common_scenarios.createLanguage(languageData[1]);
     common_scenarios.checkLanguageBO(languageData[1]);
     common_scenarios.generateRtlStylesheet();
-    scenario('Go to the Front Office', client => {
+   scenario('Go to the Front Office', client => {
       test('should go to the Front Office', () => client.accessToFO(AccessPageFO));
     }, 'common_client');
     common_scenarios.checkLanguageFO(languageData[1]);
@@ -83,27 +83,26 @@ scenario('Create, edit, delete and check "Languages" in the Back Office', () => 
     scenario('Go back to the Back Office', client => {
       test('should go back to the Back Office', () => client.accessToBO(AccessPageBO));
     }, 'common_client');
-    // Related issue #9719
     common_scenarios.editLanguage(languageData[0].name, languageEditedData[0]);
-    scenario('Go to the Front Office', client => {
+   scenario('Go to the Front Office', client => {
       test('should go to the Front Office', () => client.accessToFO(AccessPageFO));
     }, 'common_client');
     common_scenarios.checkLanguageFO(languageEditedData[0]);
     scenario('Go back to the Back Office', client => {
       test('should go back to the Back Office', () => client.accessToBO(AccessPageBO));
     }, 'common_client');
-    common_scenarios.editLanguage(languageData[0].name, languageEditedData[1]);
+    common_scenarios.editLanguage(languageData[1].name, languageEditedData[1]);
     scenario('Go to the Front Office', client => {
       test('should go to the Front Office', () => client.accessToFO(AccessPageFO));
     }, 'common_client');
     common_scenarios.checkLanguageFO(languageEditedData[1]);
   }, 'common_client');
 
-  scenario('Test 4: Delete the created languages in the Back Office and check it in the Front Office', () => {
+ scenario('Test 4: Delete the created languages in the Back Office and check it in the Front Office', () => {
     scenario('Go back to the Back Office', client => {
       test('should go back to the Back Office', () => client.accessToBO(AccessPageBO));
     }, 'common_client');
-    common_scenarios.deleteLanguage(languageData[1].name);
+    common_scenarios.deleteLanguage(languageEditedData[0].name);
     common_scenarios.deleteLanguage(languageEditedData[1].name);
     scenario('Go to the Front Office', client => {
       test('should go to the Front Office', () => client.accessToFO(AccessPageFO));
