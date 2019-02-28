@@ -1,7 +1,7 @@
 module.exports = Object.assign(
     {
         Manufacturers: {
-            submenu: '//*[@id="subtab-AdminParentManufacturers"]/a'
+            submenu: '#subtab-AdminParentManufacturers a'
         }
     },
     require('./brands'),
