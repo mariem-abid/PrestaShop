@@ -122,7 +122,7 @@ module.exports = {
       test('should set the "Search products" input', () => client.waitAndSetValue(Stock.search_input, productName, 2000));
       test('should click on "Search" button', () => client.waitForExistAndClick(Stock.search_button, 2000));
       test('should check that the "Available quantity" is equal to ' + availableQuantity + '', () => client.checkTextValue(Stock.available_column.replace("%ID", 1), availableQuantity, 'equal', 2000));
-      test('should check the "Reserved quantity" is equal to ' + reservedQuantity + '', () => client.checkTextValue(Stock.employee_column.replace("%O", 1), reservedQuantity));
+      test('should check the "Reserved quantity" is equal to ' + reservedQuantity + '', () => client.checkTextValue(Stock.reserved_column.replace("%O", 1), reservedQuantity));
       test('should check the "Physical quantity" is equal to ' + physicalQuantity + '', () => client.checkTextValue(Stock.physical_column.replace("%ID", 1), physicalQuantity));
     }, 'common_client');
   },
